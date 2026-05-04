@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库问答机器人</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 60px; background: #f5f7fa; }
+        .answer-box { background: #fff; border-radius: 12px; padding: 24px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .source-item { border-left: 3px solid #0d6efd; padding-left: 12px; margin-bottom: 12px; }
+        .source-item .snippet { color: #555; font-size: 0.95rem; }
+        .source-item .meta { color: #888; font-size: 0.8rem; }
+        mark { background: #fff3cd; padding: 0 2px; border-radius: 2px; }
+        .hero { text-align: center; padding: 40px 0; }
+        .hero h1 { font-size: 2.2rem; font-weight: 700; color: #1a1a2e; }
+        .hero p { color: #666; }
+        .search-card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .nav-tabs { border-bottom: 2px solid #e9ecef; }
+        .nav-tabs .nav-link { border: none; color: #666; font-weight: 500; padding: 10px 20px; }
+        .nav-tabs .nav-link.active { color: #0d6efd; border-bottom: 2px solid #0d6efd; background: transparent; }
+        .keyword-cloud { margin-top: 16px; padding: 12px 0; border-top: 1px solid #eee; }
+        .keyword-tag { display: inline-block; padding: 4px 12px; margin: 3px 6px 3px 0;
+            background: #eef2ff; color: #4f46e5; border-radius: 20px; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.2s; }
+        .keyword-tag:hover { background: #dde4ff; transform: scale(1.05); }
+        .keyword-tag.active { background: #4f46e5; color: #fff; }
+        .ai-badge { font-size: 0.7rem; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+        .copy-btn { cursor: pointer; font-size: 0.85rem; padding: 4px 14px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #666; transition: all 0.2s; }
+        .copy-btn:hover { background: #f0f0ff; border-color: #6366f1; color: #4f46e5; }
+        .copy-btn.copied { background: #ecfdf5; border-color: #10b981; color: #059669; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">📚 知识库问答</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">问答</a>
+            <a class="nav-link" href="/knowledge">知识管理</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero">
+        <h1>知识库问答机器人</h1>
+        <p>基于 Lucene 全文检索 + LLM 智能生成，快速从您的知识库中找到答案</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="search-card">
+                <ul class="nav nav-tabs mb-3" id="qaTabs">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-mode="llm">🤖 AI 问答<span class="ai-badge">RAG</span></button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-mode="ask">关键词问答</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-mode="search">全文搜索</button>
+                    </li>
+                </ul>
+
+                <div class="input-group mb-3">
+                    <input type="text" id="questionInput" class="form-control form-control-lg"
+                           placeholder="输入您的问题，AI 将从知识库中检索并生成答案..." autofocus>
+                    <button class="btn btn-primary btn-lg px-4" onclick="doAsk()">🔍 提问</button>
+                </div>
+
+                <div class="d-flex align-items-center text-muted small">
+                    <span>检索条目数：</span>
+                    <select id="maxResults" class="form-select form-select-sm w-auto ms-2">
+                        <option value="3">3</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                    </select>
+                    <span class="ms-3" id="modeHint" style="color:#764ba2;">当前：AI 智能生成答案</span>
+                </div>
+
+                <!-- 关键词云 -->
+                <div class="keyword-cloud">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="text-muted small">🏷️ 热门关键词</span>
+                        <button class="btn btn-link btn-sm text-decoration-none p-0" onclick="loadKeywordCloud()">刷新</button>
+                    </div>
+                    <div id="keywordCloud">
+                        <span class="text-muted small">加载中...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultArea" class="answer-box" style="display:none;">
+                <div id="answerContent"></div>
+                <div id="sourcesArea" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentMode = 'llm';
+let lastAnswerText = '';
+
+document.getElementById('qaTabs').addEventListener('click', function(e) {
+    if (e.target.dataset.mode) {
+        currentMode = e.target.dataset.mode;
+        document.querySelectorAll('#qaTabs .nav-link').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        const hints = {llm: '输入您的问题，AI 将从知识库中检索并生成答案...', ask: '输入您的问题，通过关键词匹配查找答案...', search: '输入搜索关键词...'};
+        const modeHints = {llm: '当前：AI 智能生成答案', ask: '当前：关键词匹配模式', search: '当前：全文搜索模式'};
+        document.getElementById('questionInput').placeholder = hints[currentMode] || hints.llm;
+        document.getElementById('modeHint').textContent = modeHints[currentMode] || '';
+        document.getElementById('resultArea').style.display = 'none';
+    }
+});
+
+document.getElementById('questionInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doAsk();
+});
+
+function doAsk() {
+    const q = document.getElementById('questionInput').value.trim();
+    if (!q) return;
+    const max = parseInt(document.getElementById('maxResults').value);
+
+    const resultArea = document.getElementById('resultArea');
+    resultArea.style.display = 'block';
+    const loadingText = currentMode === 'llm' ? '正在检索知识库并生成 AI 答案...' : '正在搜索...';
+    document.getElementById('answerContent').innerHTML = '<div class="text-center text-muted py-4">' + loadingText + '</div>';
+    document.getElementById('sourcesArea').innerHTML = '';
+
+    let url, body;
+    if (currentMode === 'llm') {
+        url = '/api/qa/ask-llm';
+        body = JSON.stringify({ question: q, maxResults: max });
+    } else if (currentMode === 'ask') {
+        url = '/api/qa/ask';
+        body = JSON.stringify({ question: q, maxResults: max });
+    } else {
+        url = '/api/qa/search';
+        body = JSON.stringify({ query: q, maxResults: max });
+    }
+
+    fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: body })
+        .then(r => r.json())
+        .then(data => {
+            if (currentMode === 'search') {
+                renderSearchResult(data);
+            } else {
+                renderAskResult(data);
+            }
+        })
+        .catch(err => {
+            document.getElementById('answerContent').innerHTML =
+                '<div class="alert alert-danger">请求失败：' + err.message + '</div>';
+        });
+}
+
+function renderAskResult(data) {
+    lastAnswerText = data.answer || '';
+    const answerDiv = document.getElementById('answerContent');
+    if (!data.found) {
+        answerDiv.innerHTML = '<div class="text-center text-muted py-4">未找到相关知识，请尝试其他问题。</div>';
+        return;
+    }
+    const label = currentMode === 'llm' ? '🤖 AI 回答：' : '📝 回答：';
+    let errorAlert = '';
+    if (data.llmError) {
+        errorAlert = '<div class="alert alert-warning py-2 mb-2 d-flex align-items-center" style="font-size:0.9rem;">' +
+            '<span class="me-2">⚠️</span><span>AI 生成失败，已降级为关键词匹配。原因：' + escapeHtml(data.llmError) + '</span></div>';
+    }
+    answerDiv.innerHTML = errorAlert +
+        '<div class="d-flex justify-content-between align-items-center mb-2">' +
+        '<span class="fw-bold">' + label + '</span>' +
+        '<button class="copy-btn" id="copyBtn" onclick="copyAnswer()">📋 复制</button>' +
+        '</div>' +
+        '<div id="answerText" class="p-3 bg-light rounded" style="white-space:pre-wrap;word-break:break-word">' +
+        escapeHtml(data.answer) + '</div>';
+    renderSources(data.sources);
+}
+
+function copyAnswer() {
+    if (!lastAnswerText) return;
+    navigator.clipboard.writeText(lastAnswerText).then(function() {
+        var btn = document.getElementById('copyBtn');
+        if (btn) {
+            btn.innerHTML = '✅ 已复制';
+            btn.classList.add('copied');
+            setTimeout(function() {
+                btn.innerHTML = '📋 复制';
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+    }).catch(function() {
+        // 降级方案：选中文本手动复制
+        var textEl = document.getElementById('answerText');
+        if (textEl) {
+            var range = document.createRange();
+            range.selectNodeContents(textEl);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    });
+}
+
+function renderSearchResult(results) {
+    lastAnswerText = '';
+    const answerDiv = document.getElementById('answerContent');
+    if (!results || results.length === 0) {
+        answerDiv.innerHTML = '<div class="text-center text-muted py-4">无匹配结果。</div>';
+        return;
+    }
+    answerDiv.innerHTML = '<div class="fw-bold mb-2">共找到 ' + results.length + ' 条结果：</div>';
+    renderSources(results);
+}
+
+function renderSources(sources) {
+    if (!sources || sources.length === 0) return;
+    const sourcesDiv = document.getElementById('sourcesArea');
+    let html = '<div class="fw-bold mb-2">📖 知识来源：</div>';
+    sources.forEach((s, i) => {
+        html += '<div class="source-item mb-2">' +
+            '<div class="fw-semibold">' + (i+1) + '. ' + escapeHtml(s.title) + '</div>' +
+            '<div class="snippet">' + s.snippet + '</div>' +
+            '<div class="meta">分类：' + escapeHtml(s.category || '未分类') +
+            ' | 相关度：' + (s.score*100).toFixed(1) + '%</div>' +
+            '</div>';
+    });
+    sourcesDiv.innerHTML = html;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// === 关键词云 ===
+let activeKeyword = null;
+
+function loadKeywordCloud() {
+    fetch('/api/knowledge/keywords')
+        .then(r => r.json())
+        .then(keywords => {
+            const cloud = document.getElementById('keywordCloud');
+            if (!keywords || keywords.length === 0) {
+                cloud.innerHTML = '<span class="text-muted small">暂无关键词，请先导入文件</span>';
+                return;
+            }
+            let html = '';
+            keywords.forEach(kw => {
+                const cls = (activeKeyword === kw) ? 'keyword-tag active' : 'keyword-tag';
+                html += '<span class="' + cls + '" onclick="searchByKeyword(\'' + escapeHtml(kw) + '\')">' + escapeHtml(kw) + '</span>';
+            });
+            cloud.innerHTML = html;
+        })
+        .catch(err => {
+            document.getElementById('keywordCloud').innerHTML =
+                '<span class="text-muted small">加载失败</span>';
+        });
+}
+
+function searchByKeyword(kw) {
+    if (activeKeyword === kw) {
+        activeKeyword = null;
+        loadKeywordCloud();
+        return;
+    }
+    activeKeyword = kw;
+    loadKeywordCloud();
+    document.getElementById('questionInput').value = '';
+    const resultArea = document.getElementById('resultArea');
+    resultArea.style.display = 'block';
+    document.getElementById('answerContent').innerHTML =
+        '<div class="text-center text-muted py-4">正在搜索关键词：<strong>' + escapeHtml(kw) + '</strong>...</div>';
+    document.getElementById('sourcesArea').innerHTML = '';
+
+    fetch('/api/knowledge/by-keyword?kw=' + encodeURIComponent(kw))
+        .then(r => r.json())
+        .then(items => {
+            const answerDiv = document.getElementById('answerContent');
+            if (!items || items.length === 0) {
+                answerDiv.innerHTML = '<div class="text-center text-muted py-4">未找到包含关键词 "' + escapeHtml(kw) + '" 的内容。</div>';
+                return;
+            }
+            answerDiv.innerHTML = '<div class="fw-bold mb-2">🔑 关键词 "' + escapeHtml(kw) + '" 共找到 ' + items.length + ' 条：</div>';
+            const sourcesDiv = document.getElementById('sourcesArea');
+            let html = '';
+            items.forEach((s, i) => {
+                html += '<div class="source-item mb-2">' +
+                    '<div class="fw-semibold">' + (i+1) + '. ' + escapeHtml(s.title) + '</div>' +
+                    '<div class="snippet">' + escapeHtml(s.content ? s.content.substring(0, 200) : '') + '</div>' +
+                    '<div class="meta">分类：' + escapeHtml(s.category || '未分类') +
+                    ' | 关键词：' + escapeHtml(s.keywords || '') + '</div>' +
+                    '</div>';
+            });
+            sourcesDiv.innerHTML = html;
+        })
+        .catch(err => {
+            document.getElementById('answerContent').innerHTML =
+                '<div class="alert alert-danger">请求失败：' + err.message + '</div>';
+        });
+}
+
+loadKeywordCloud();
+</script>
+</body>
+</html>

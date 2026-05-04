@@ -1,0 +1,53 @@
+# ============================================================
+# Knowledge Base Q&A Robot — 应用配置
+# ============================================================
+
+spring:
+  # H2 嵌入式数据库（文件持久化存储）
+  datasource:
+    url: jdbc:h2:file:./data/faqrobot;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  # H2 控制台（开发环境可访问 http://localhost:8080/h2-console）
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  # Thymeleaf
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+
+# 服务端口
+server:
+  port: 8080
+
+# ============================================================
+# LLM 配置（OpenAI 兼容接口，支持 DeepSeek / 通义千问 / Ollama 等）
+# ============================================================
+llm:
+  # API 地址
+  # DeepSeek: https://api.deepseek.com
+  # 通义千问: https://dashscope.aliyuncs.com/compatible-mode
+  # Ollama 本地: http://localhost:11434
+  api-url: https://open.bigmodel.cn/api/paas/v4
+  # API Key（建议通过环境变量 LLM_API_KEY 注入）
+  api-key: ${LLM_API_KEY:3263952d90d8441f9a7cea36dc22209a.8JgpYJMQQ7SqPsWs}
+  # 模型名称
+  model: glm-4.7-flash
+  chat-path: /chat/completions
+  # 是否启用 LLM
+  enabled: true

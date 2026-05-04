@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>知识库管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .upload-area { border: 2px dashed #dee2e6; border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer; }
+        .upload-area:hover { border-color: #6366f1; background: #f8f9ff; }
+        .knowledge-item { cursor: pointer; }
+        .kw-tag { display: inline-block; background: #e0e7ff; color: #4338ca; border-radius: 12px; padding: 1px 8px; font-size: 0.75rem; margin: 2px; }
+        .category-badge { font-size: 0.7rem; }
+        #fileInput { display: none; }
+        .file-import-item:hover { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mb-4 px-3">
+        <a class="navbar-brand fw-bold" href="/">🤖 知识库问答机器人</a>
+        <div class="ms-auto d-flex gap-2">
+            <a class="btn btn-outline-primary btn-sm" href="/knowledge">📚 知识管理</a>
+            <a class="btn btn-outline-secondary btn-sm" href="/">💬 问答</a>
+        </div>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>📚 知识库管理</h4>
+        <div>
+            <span class="badge bg-success me-2">知识条目: <span id="statKnowledge">0</span></span>
+            <span class="badge bg-info">索引文档: <span id="statIndex">0</span></span>
+        </div>
+    </div>
+
+    <!-- 手动录入 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold">标题</label>
+                    <input type="text" id="ingestTitle" class="form-control" placeholder="知识标题">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small fw-bold">内容</label>
+                    <input type="text" id="ingestContent" class="form-control" placeholder="知识内容...">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-bold">分类</label>
+                    <input type="text" id="ingestCategory" class="form-control" placeholder="可选">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" onclick="ingest()">➕ 录入知识</button>
+                </div>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+                <button class="btn btn-outline-warning btn-sm" onclick="rebuildIndex()">🔄 重建索引</button>
+                <span class="text-muted small align-self-center" id="msgArea"></span>
+            </div>
+            <hr>
+            <!-- 文件导入 -->
+            <div class="upload-area mt-2" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" accept=".txt,.md,.docx,.xlsx,.xls" onchange="handleFileSelect(event)">
+                <div class="text-muted">
+                    <div style="font-size:1.5rem;">📁</div>
+                    <div class="small mt-1">点击上传文件导入知识库</div>
+                    <div class="small text-muted">支持 .txt/.md/.docx/.xlsx/.xls 文件，自动分片 + 关键词提取</div>
+                    <div class="small fw-bold mt-1" id="fileLabel" style="color:#6366f1;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件导入管理（统一删除） -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">📂 文件导入管理 <small class="text-muted">（可统一删除整个导入）</small></h5>
+                <button class="btn btn-outline-secondary btn-sm" onclick="loadFileImports()">刷新</button>
+            </div>
+            <div id="fileImportList">
+                <div class="text-center text-muted py-3">加载中...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 知识列表 -->
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">知识条目列表</h5>
+                <button class="btn btn-outline-secondary btn-sm" onclick="loadAll()">刷新</button>
+            </div>
+            <div id="knowledgeList"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+loadStats();
+loadAll();
+loadFileImports();
+
+function loadStats() {
+    fetch('/api/knowledge/stats')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('statKnowledge').textContent = data.knowledge_count || 0;
+            document.getElementById('statIndex').textContent = data.index_count || 0;
+        });
+}
+
+function loadAll() {
+    fetch('/api/knowledge/list')
+        .then(r => r.json())
+        .then(renderList);
+}
+
+function renderList(items) {
+    const container = document.getElementById('knowledgeList');
+    if (!items || items.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-4">暂无知识条目，请先录入</div>';
+        return;
+    }
+    let html = '<div class="list-group list-group-flush">';
+    items.forEach(item => {
+        const date = item.createdAt ? new Date(item.createdAt).toLocaleString('zh-CN') : '';
+        html += '<div class="list-group-item list-group-item-action knowledge-item">' +
+            '<div class="d-flex justify-content-between align-items-start">' +
+            '<div class="flex-grow-1">' +
+            '<div class="fw-semibold">' + escapeHtml(item.title) + '</div>' +
+            '<div class="text-muted small mt-1">' + escapeHtml(item.content.substring(0, 120)) + (item.content.length > 120 ? '...' : '') + '</div>' +
+            '</div>' +
+            '<div class="text-end ms-3">' +
+            '<span class="badge bg-info category-badge">' + escapeHtml(item.category || '未分类') + '</span>' +
+            '<div class="mt-2">' +
+            '<button class="btn btn-outline-danger btn-sm py-0 px-1" title="删除" onclick="del(' + item.id + ')">🗑</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            (item.keywords ? '<div class="mt-1">' + item.keywords.split(',').map(k => '<span class="kw-tag">' + escapeHtml(k.trim()) + '</span>').join('') + '</div>' : '') +
+            '<div class="text-muted small mt-1">来源：' + escapeHtml(item.source || '手动输入') + ' | ' + date + '</div>' +
+            '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// === 文件导入管理 ===
+function loadFileImports() {
+    fetch('/api/knowledge/files')
+        .then(r => r.json())
+        .then(renderFileImports)
+        .catch(() => {
+            document.getElementById('fileImportList').innerHTML =
+                '<div class="text-center text-muted py-3">加载失败</div>';
+        });
+}
+
+function renderFileImports(items) {
+    const container = document.getElementById('fileImportList');
+    if (!items || items.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-3">暂无文件导入记录</div>';
+        return;
+    }
+    let html = '<div class="list-group list-group-flush">';
+    items.forEach(item => {
+        const date = item.createdAt ? new Date(item.createdAt).toLocaleString('zh-CN') : '';
+        html += '<div class="list-group-item file-import-item">' +
+            '<div class="d-flex justify-content-between align-items-center">' +
+            '<div>' +
+            '<span class="fw-semibold">📄 ' + escapeHtml(item.fileName || '未知文件') + '</span>' +
+            '<span class="badge bg-secondary ms-2">' + (item.chunkCount || 0) + ' 个分片</span>' +
+            '<span class="badge bg-info category-badge ms-1">' + escapeHtml(item.category || '') + '</span>' +
+            '<div class="text-muted small">' + date + '</div>' +
+            '</div>' +
+            '<button class="btn btn-danger btn-sm" onclick="delFileImport(' + item.id + ', \'' + escapeHtml(item.fileName || '') + '\')">' +
+            '🗑 删除导入</button>' +
+            '</div>' +
+            (item.keywords ? '<div class="mt-1">' + item.keywords.split(',').map(k => '<span class="kw-tag">' + escapeHtml(k.trim()) + '</span>').join('') + '</div>' : '') +
+            '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function delFileImport(id, fileName) {
+    if (!confirm('确认删除文件导入 "' + fileName + '" 及其所有 ' + ' 个分片？此操作不可撤销！')) return;
+    fetch('/api/knowledge/files/' + id, { method: 'DELETE' })
+        .then(r => {
+            if (!r.ok) throw new Error('删除失败');
+            return r.json();
+        })
+        .then(data => {
+            showMsg('已删除文件导入，共清除 ' + (data.deletedChunks || 0) + ' 个分片', 'success');
+            loadFileImports();
+            loadAll();
+            loadStats();
+        })
+        .catch(err => {
+            showMsg('删除失败: ' + err.message, 'danger');
+        });
+}
+
+function ingest() {
+    const title = document.getElementById('ingestTitle').value.trim();
+    const content = document.getElementById('ingestContent').value.trim();
+    const category = document.getElementById('ingestCategory').value.trim();
+    if (!title || !content) { showMsg('标题和内容不能为空', 'danger'); return; }
+    fetch('/api/knowledge/ingest', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({title: title, content: content, category: category || '未分类', source: 'Web界面'})
+    })
+    .then(r => { if (!r.ok) throw new Error('录入失败'); return r.json(); })
+    .then(() => {
+        document.getElementById('ingestTitle').value = '';
+        document.getElementById('ingestContent').value = '';
+        document.getElementById('ingestCategory').value = '';
+        showMsg('录入成功', 'success');
+        loadAll(); loadStats();
+    })
+    .catch(err => showMsg(err.message, 'danger'));
+}
+
+function del(id) {
+    if (!confirm('确认删除？')) return;
+    fetch('/api/knowledge/' + id, { method: 'DELETE' })
+        .then(r => { if (!r.ok) throw new Error('删除失败'); showMsg('删除成功', 'success'); loadAll(); loadStats(); })
+        .catch(err => showMsg(err.message, 'danger'));
+}
+
+function rebuildIndex() {
+    fetch('/api/knowledge/rebuild-index', { method: 'POST' })
+        .then(r => r.text())
+        .then(msg => { showMsg(msg, 'success'); loadStats(); })
+        .catch(err => showMsg(err.message, 'danger'));
+}
+
+function showMsg(msg, type) {
+    const area = document.getElementById('msgArea');
+    area.innerHTML = '<span class="text-' + type + '">' + msg + '</span>';
+    setTimeout(() => area.innerHTML = '', 3000);
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// === 文件上传 ===
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    document.getElementById('fileLabel').textContent = '已选择: ' + file.name;
+    showMsg('正在导入文件: ' + file.name + '...', 'info');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/api/knowledge/import', { method: 'POST', body: formData })
+        .then(r => {
+            if (!r.ok) {
+                return r.json().then(errData => {
+                    throw new Error(errData.error || errData.message || '导入失败');
+                }).catch(e => {
+                    if (e.message && e.message !== '导入失败') throw e;
+                    throw new Error('导入失败 (HTTP ' + r.status + ')');
+                });
+            }
+            return r.json();
+        })
+        .then(data => {
+            showMsg('导入成功！分片数: ' + data.chunkCount + '，全局关键词: ' + (data.globalKeywords || []).join(', '), 'success');
+            document.getElementById('fileLabel').textContent = '';
+            document.getElementById('fileInput').value = '';
+            loadAll(); loadStats(); loadFileImports();
+        })
+        .catch(err => {
+            showMsg('导入失败: ' + err.message, 'danger');
+            document.getElementById('fileLabel').textContent = '';
+            document.getElementById('fileInput').value = '';
+        });
+}
+</script>
+</body>
+</html>
