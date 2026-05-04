@@ -6,15 +6,18 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * 内容分片器 — 自动检测内容结构并选择最优分片策略
  *
- * <p>基于结构特征（而非关键词）检测：
+ * <p>策略优先级（从最明确的结构信号到最弱）：
  * <ol>
- *   <li>二行组模式 — 非空行成对出现（常见于 Q&A 文档），按每 2 行分片</li>
  *   <li>Markdown 标题模式 — 检测到 # 标题，按标题切分</li>
+ *   <li>重复字段模式 — 每行都是 {@code key: value} 格式且 key 呈周期性重复，
+ *       按周期分片，首个字段的值作为标题</li>
+ *   <li>二行组模式 — 非空行成对出现（常见于 Q&A 文档），按每 2 行分片</li>
  *   <li>逐行模式 — 大多数非空行孤立出现，按行分片</li>
  *   <li>段落模式（回退）— 按空行分段，控制每片大小</li>
  * </ol>
@@ -28,6 +31,10 @@ public class ContentChunker {
 
     private static final Pattern MD_HEADER = Pattern.compile("^#{1,4}\\s+");
 
+    // 匹配 "key": value 或 key: value 或 key：value，提取 key 名称
+    private static final Pattern KV_LINE = Pattern.compile(
+            "^\"([^\"]+)\"\\s*:\\s*|^([^：:\\s]+)\\s*[：:]\\s*");
+
     /**
      * 将文本分片为多个片段，自动选择最优策略
      */
@@ -38,48 +45,129 @@ public class ContentChunker {
 
         String[] lines = text.split("\\r?\\n");
 
-        // 1. 检测 Markdown 标题模式（优先，因为标题是明确的边界信号）
+        // 1. Markdown 标题模式（# 是明确的结构信号）
         if (detectMarkdownHeaders(lines)) {
-            log.debug("检测到 Markdown 标题，按标题分片");
+            log.info("检测到 Markdown 标题，按标题分片");
             return chunkByHeaders(lines);
         }
 
-        // 2. 分析非空行的连续段结构
-        int[] runHistogram = buildRunHistogram(lines); // [1-行段, 2-行段, 3+-行段]
+        // 2. 重复字段模式（key: value 行周周期性重复）
+        int fieldCycle = detectFieldCycle(lines);
+        if (fieldCycle > 0) {
+            log.info("检测到重复字段模式，周期={}，按字段组分片", fieldCycle);
+            return chunkByFieldPattern(lines, fieldCycle);
+        }
+
+        // 3. 分析非空行的连续段结构
+        int[] runHistogram = buildRunHistogram(lines);
         int totalGrouped = runHistogram[0] + runHistogram[1] + runHistogram[2];
         if (totalGrouped == 0) return Collections.emptyList();
 
-        // 3. 二行组为主 → Q&A / 成对结构
+        // 4. 二行组为主 → Q&A / 成对结构
         double pairRatio = (double) runHistogram[1] / totalGrouped;
         if (pairRatio >= 0.4) {
-            log.debug("检测到二行组结构 (占比 {:.0%})，按每 2 行分片", pairRatio);
+            log.info("检测到二行组结构 (占比 {:.0%})，按每 2 行分片", pairRatio);
             return chunkByLineGroups(lines, 2);
         }
 
-        // 4. 孤行为主 + 弱段落结构 → 逐行模式
+        // 5. 孤行为主 + 弱段落结构 → 逐行模式
         double singleRatio = (double) runHistogram[0] / totalGrouped;
         double emptyRatio = calcEmptyRatio(lines);
         if (singleRatio >= 0.5 && emptyRatio < 0.15) {
-            log.debug("检测到逐行结构，按行分片");
+            log.info("检测到逐行结构，按行分片");
             return chunkByLineGroups(lines, 1);
         }
 
-        // 5. 回退到段落模式
-        log.debug("使用段落模式分片 (二行组 {:.0%}, 孤行 {:.0%}, 空行 {:.0%})",
+        // 6. 回退到段落模式
+        log.info("使用段落模式分片 (二行组 {:.0%}, 孤行 {:.0%}, 空行 {:.0%})",
                 pairRatio, singleRatio, emptyRatio);
         return chunkByParagraphs(text);
     }
 
     // ==================== 结构检测 ====================
 
+    private boolean detectMarkdownHeaders(String[] lines) {
+        int headerCount = 0;
+        for (String line : lines) {
+            if (MD_HEADER.matcher(line).find()) {
+                headerCount++;
+            }
+        }
+        return headerCount >= 2;
+    }
+
+    // ==================== 重复字段模式检测 ====================
+
     /**
-     * 统计非空行连续段的长度分布。
-     * 返回 int[3]: [长度为1的段数, 长度为2的段数, 长度>=3的段数]
+     * 检测文件中是否存在重复的 key: value 字段模式。
+     * 分析所有非空行，提取字段名（key），寻找最短的重复周期。
+     *
+     * @return 检测到的周期（2~8），未检测到返回 -1
      */
+    private int detectFieldCycle(String[] lines) {
+        List<String> fields = new ArrayList<>();
+        int nonEmptyCount = 0;
+        for (String line : lines) {
+            String trimmed = line.trim();
+            if (trimmed.isEmpty()) {
+                // 有太多空行说明不是紧凑的字段结构
+                continue;
+            }
+            nonEmptyCount++;
+            String name = extractFieldName(trimmed);
+            if (name == null) return -1;
+            fields.add(name);
+        }
+
+        // 至少 6 行非空，且 70% 以上的行能识别为 KV 格式
+        if (fields.size() < 6) return -1;
+        double kvRatio = (double) fields.size() / nonEmptyCount;
+        if (kvRatio < 0.7) return -1;
+
+        // 尝试周期 2~8，找最短的一致周期
+        for (int period = 2; period <= 8 && period <= fields.size() / 2; period++) {
+            if (isConsistentCycle(fields, period)) {
+                return period;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 从一行中提取字段名（key 部分）。
+     * 支持格式: "key": value, key: value, key：value
+     */
+    private String extractFieldName(String line) {
+        Matcher m = KV_LINE.matcher(line);
+        if (m.find()) {
+            // group(1): 引号内的 key ("key":), group(2): 无引号的 key (key:)
+            String key = m.group(1) != null ? m.group(1) : m.group(2);
+            return key.toLowerCase();
+        }
+        return null;
+    }
+
+    /**
+     * 字段名列表是否在给定周期下保持一致性。
+     * 一致性要求：fields[i] == fields[i+period] 的比例 >= 95%
+     */
+    private boolean isConsistentCycle(List<String> fields, int period) {
+        int matches = 0;
+        int total = 0;
+        for (int i = 0; i + period < fields.size(); i++) {
+            total++;
+            if (fields.get(i).equals(fields.get(i + period))) {
+                matches++;
+            }
+        }
+        return total >= 4 && (double) matches / total >= 0.95;
+    }
+
+    // ==================== 连续段结构检测 ====================
+
     private int[] buildRunHistogram(String[] lines) {
         int[] hist = new int[3];
         int run = 0;
-
         for (String line : lines) {
             if (line.trim().isEmpty()) {
                 if (run > 0) {
@@ -110,17 +198,62 @@ public class ContentChunker {
         return lines.length == 0 ? 0 : (double) empty / lines.length;
     }
 
-    private boolean detectMarkdownHeaders(String[] lines) {
-        int headerCount = 0;
+    // ==================== 分片策略 ====================
+
+    /**
+     * 按重复字段模式分片 — 每 period 行组成一个分片，首字段值作标题
+     */
+    private List<Chunk> chunkByFieldPattern(String[] lines, int period) {
+        List<Chunk> result = new ArrayList<>();
+        List<String> recordLines = new ArrayList<>();
+        int lineInRecord = 0;
+
         for (String line : lines) {
-            if (MD_HEADER.matcher(line).find()) {
-                headerCount++;
+            String trimmed = line.trim();
+            if (trimmed.isEmpty()) {
+                if (!recordLines.isEmpty()) {
+                    result.add(buildFieldChunk(recordLines));
+                    recordLines.clear();
+                    lineInRecord = 0;
+                }
+                continue;
+            }
+            recordLines.add(trimmed);
+            lineInRecord++;
+
+            if (lineInRecord == period) {
+                result.add(buildFieldChunk(recordLines));
+                recordLines.clear();
+                lineInRecord = 0;
             }
         }
-        return headerCount >= 2;
+        if (!recordLines.isEmpty()) {
+            result.add(buildFieldChunk(recordLines));
+        }
+        // 不对字段模式做小片段合并 — 每条记录语义独立
+        return result;
     }
 
-    // ==================== 分片策略 ====================
+    /**
+     * 从多条字段行构建一个分片：首行值作标题，完整内容保留
+     */
+    private Chunk buildFieldChunk(List<String> lines) {
+        String title = extractFieldValue(lines.get(0));
+        String content = String.join("\n", lines);
+        return new Chunk(title, content);
+    }
+
+    /**
+     * 提取字段行中 key: 后面的 value 部分，去除首尾引号
+     */
+    private String extractFieldValue(String line) {
+        String value = line.replaceFirst(
+                "^\"[^\"]+\"\\s*:\\s*|^[^：:\\s]+\\s*[：:]\\s*", "").trim();
+        if (value.startsWith("\"") && value.endsWith("\"")) {
+            value = value.substring(1, value.length() - 1);
+        }
+        return value;
+    }
 
     /**
      * 按固定行数分组（1 行 = 逐行，2 行 = Q&A 对）
@@ -155,7 +288,6 @@ public class ContentChunker {
                 lineInGroup = 0;
             }
         }
-        // 剩余不完整的分组
         if (buf.length() > 0) {
             result.add(buildChunk(buf.toString(), result.size()));
         }
@@ -163,7 +295,8 @@ public class ContentChunker {
         return mergeSmallResultChunks(result);
     }
 
-    private void flushGroupIfFull(List<Chunk> result, StringBuilder buf, int lineInGroup, int groupSize) {
+    private void flushGroupIfFull(List<Chunk> result, StringBuilder buf,
+                                  int lineInGroup, int groupSize) {
         if (buf.length() > 0 && lineInGroup == groupSize) {
             result.add(buildChunk(buf.toString(), result.size()));
         }
@@ -180,7 +313,8 @@ public class ContentChunker {
         for (String line : lines) {
             if (MD_HEADER.matcher(line).find()) {
                 if (buf.length() > 0) {
-                    String title = currentTitle != null ? currentTitle : "片段 " + (result.size() + 1);
+                    String title = currentTitle != null ? currentTitle
+                            : "片段 " + (result.size() + 1);
                     result.addAll(contentToChunks(buf.toString().trim(), title));
                     buf = new StringBuilder();
                 }
@@ -192,7 +326,8 @@ public class ContentChunker {
         }
 
         if (buf.length() > 0) {
-            String title = currentTitle != null ? currentTitle : "片段 " + (result.size() + 1);
+            String title = currentTitle != null ? currentTitle
+                    : "片段 " + (result.size() + 1);
             result.addAll(contentToChunks(buf.toString().trim(), title));
         }
 
@@ -210,7 +345,8 @@ public class ContentChunker {
         for (String para : paragraphs) {
             String trimmed = para.trim();
             if (trimmed.isEmpty()) continue;
-            if (current.length() + trimmed.length() > MAX_CHUNK_SIZE && current.length() > MIN_CHUNK_SIZE) {
+            if (current.length() + trimmed.length() > MAX_CHUNK_SIZE
+                    && current.length() > MIN_CHUNK_SIZE) {
                 rawChunks.add(current.toString().trim());
                 current = new StringBuilder();
             }
@@ -248,7 +384,8 @@ public class ContentChunker {
         List<String> parts = splitBySentence(content);
         List<Chunk> result = new ArrayList<>();
         for (int i = 0; i < parts.size(); i++) {
-            String title = parts.size() == 1 ? baseTitle : baseTitle + " (" + (i + 1) + ")";
+            String title = parts.size() == 1 ? baseTitle
+                    : baseTitle + " (" + (i + 1) + ")";
             result.add(new Chunk(title, parts.get(i)));
         }
         return result;
@@ -258,7 +395,8 @@ public class ContentChunker {
         List<String> merged = new ArrayList<>();
         StringBuilder buf = new StringBuilder();
         for (String chunk : chunks) {
-            if (buf.length() + chunk.length() > MAX_CHUNK_SIZE && buf.length() > MIN_CHUNK_SIZE) {
+            if (buf.length() + chunk.length() > MAX_CHUNK_SIZE
+                    && buf.length() > MIN_CHUNK_SIZE) {
                 merged.add(buf.toString().trim());
                 buf = new StringBuilder();
             }
@@ -278,7 +416,8 @@ public class ContentChunker {
         String firstTitle = null;
 
         for (Chunk chunk : chunks) {
-            if (buf.length() + chunk.content.length() > MAX_CHUNK_SIZE && buf.length() > MIN_CHUNK_SIZE) {
+            if (buf.length() + chunk.content.length() > MAX_CHUNK_SIZE
+                    && buf.length() > MIN_CHUNK_SIZE) {
                 merged.add(buildChunk(buf.toString(), firstTitle, merged.size()));
                 buf = new StringBuilder();
                 firstTitle = null;
@@ -298,7 +437,8 @@ public class ContentChunker {
         String[] sentences = text.split("(?<=[。！？；\\n])");
         StringBuilder buf = new StringBuilder();
         for (String sentence : sentences) {
-            if (buf.length() + sentence.length() > MAX_CHUNK_SIZE && buf.length() > MIN_CHUNK_SIZE) {
+            if (buf.length() + sentence.length() > MAX_CHUNK_SIZE
+                    && buf.length() > MIN_CHUNK_SIZE) {
                 result.add(buf.toString().trim());
                 buf = new StringBuilder();
             }

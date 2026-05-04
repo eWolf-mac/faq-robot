@@ -2314,3 +2314,141 @@ Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\T
 2026-05-04 17:27:12.307 [http-nio-8080-exec-5] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=3124 | key_prefix=3263952d...
 2026-05-04 17:27:12.602 [http-nio-8080-exec-5] ERROR com.faqrobot.service.LLMService - LLM call failed: url=https://open.bigmodel.cn/api/paas/v4/chat/completions, error=429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
 2026-05-04 17:27:12.603 [http-nio-8080-exec-5] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: LLM 调用异常: 429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-04 17:43:18.803 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 7944 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
+2026-05-04 17:43:18.813 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-05-04 17:43:18.813 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-04 17:43:19.321 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-04 17:43:19.348 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 1 JPA repository interfaces.
+2026-05-04 17:43:19.693 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-05-04 17:43:19.693 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-05-04 17:43:19.693 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-04 17:43:19.693 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-05-04 17:43:19.851 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-05-04 17:43:19.851 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 997 ms
+2026-05-04 17:43:19.867 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-05-04 17:43:26.123 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-05-04 17:43:26.127 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
+2026-05-04 17:43:26.203 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-04 17:43:26.233 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-05-04 17:43:26.328 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-05-04 17:43:26.390 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2026-05-04 17:43:26.782 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-05-04 17:43:26.782 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-04 17:43:27.096 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 21 docs
+2026-05-04 17:43:27.161 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-04 17:43:27.254 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2026-05-04 17:43:27.523 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-05-04 17:43:27.554 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-05-04 17:43:27.570 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 9.144 seconds (JVM running for 9.777)
+2026-05-04 17:43:33.150 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-04 17:43:33.150 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-05-04 17:43:33.151 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-05-04 17:43:42.118 [http-nio-8080-exec-4] INFO  c.faqrobot.service.IngestionService - 文件导入已删除: parentId=289, 分片数=13
+2026-05-04 17:43:42.133 [http-nio-8080-exec-4] INFO  c.f.controller.KnowledgeController - 文件导入统一删除完成: parentId=289, 分片数=13
+2026-05-04 17:43:49.978 [http-nio-8080-exec-1] INFO  c.f.controller.KnowledgeController - 收到文件导入请求: 质量答题.txt (大小: 16014 bytes)
+2026-05-04 17:43:49.979 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - ========== 开始导入文件: 质量答题.txt ==========
+2026-05-04 17:43:49.979 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 提取文件文本内容...
+2026-05-04 17:43:49.989 [http-nio-8080-exec-1] INFO  c.faqrobot.service.FileTextExtractor - 文本解码: txt 使用 UTF-8, 9586 字符
+2026-05-04 17:43:49.990 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 文本提取完成，共 9586 字符
+2026-05-04 17:43:49.990 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService -   提取内容前200字: "title": "请选出以下不属于慕思质量哲学的选项",
+"correct": "D",
+"title": "请选出不符合质量定义的选项",
+"correct": "A",
+"title": "以下属于“智造精品”诠释内容的是",
+"correct": "B",
+"title": "以下不属于“持续改进”诠释内容的是",
+"correct": "C",
+"title": "“体贴
+2026-05-04 17:43:49.990 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 内容分片中...
+2026-05-04 17:43:49.996 [http-nio-8080-exec-1] DEBUG com.faqrobot.service.ContentChunker - 检测到逐行模式，按行分片
+2026-05-04 17:43:49.998 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 分片完成，共 13 个分片
+2026-05-04 17:43:49.998 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 提取全局关键词...
+2026-05-04 17:43:50.172 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 全局关键词: [架构, 数据, 流程, 质量, 循环, pdca, 沟通, 应用, why, 包含, 选项, 锦囊, 知识, 步骤, 模型, 设计, 绝技, 哪些, 描述, 包括, 回溯, 要素, 企业, 选择]
+2026-05-04 17:43:50.172 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 保存父条目到数据库和索引...
+2026-05-04 17:43:50.298 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 父条目已保存, ID=321
+2026-05-04 17:43:50.399 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[1/13] 已保存, ID=322, 标题="title": "请选出以下不属于慕思质量哲学的选项",
+2026-05-04 17:43:50.497 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[2/13] 已保存, ID=323, 标题="title": "什么是质量改进？请选择描述最准确的选项。",
+2026-05-04 17:43:50.597 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[3/13] 已保存, ID=324, 标题="title": "属于克劳士比的4条质量管理定理的有？",
+2026-05-04 17:43:50.725 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[4/13] 已保存, ID=325, 标题="title": "质量计划从（    ）开始。",
+2026-05-04 17:43:50.841 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[5/13] 已保存, ID=326, 标题="title": "PDCA是综合性循环，四个阶段是（  ）...
+2026-05-04 17:43:50.948 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[6/13] 已保存, ID=327, 标题="title": "进行5Why分析时,对根因分析说法正确的是？",
+2026-05-04 17:43:51.052 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[7/13] 已保存, ID=328, 标题="title": "总分总基本结构沟通模型中涉及的“要点”描述完整、正确的是？",
+2026-05-04 17:43:51.146 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[8/13] 已保存, ID=329, 标题="title": "数据质量的“一致性”是指",
+2026-05-04 17:43:51.243 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[9/13] 已保存, ID=330, 标题="correct": "A,B,C,D,E",
+2026-05-04 17:43:51.370 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[10/13] 已保存, ID=331, 标题="correct": "B",
+2026-05-04 17:43:51.531 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[11/13] 已保存, ID=332, 标题="title": "关于企业架构内容元模型，说法正确的有？",
+2026-05-04 17:43:51.623 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[12/13] 已保存, ID=333, 标题="correct": "B,C,D,E",
+2026-05-04 17:43:51.701 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[13/13] 已保存, ID=334, 标题="title": "属于质量回溯经典案例的是？最终的解决方案是什么？",
+2026-05-04 17:43:51.701 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - ========== 导入完成: 质量答题.txt → 13 个分片, 耗时 1722ms ==========
+2026-05-04 17:43:51.702 [http-nio-8080-exec-1] INFO  c.f.controller.KnowledgeController - 文件导入成功: 质量答题.txt, 分片数: 13
+2026-05-04 17:43:51.707 [http-nio-8080-exec-1] WARN  o.s.w.m.s.StandardServletMultipartResolver - Failed to perform cleanup of multipart items
+java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.7143613395303779877\work\Tomcat\localhost\ROOT\upload_7b08964e_2c6b_4976_9e35_3e23cfe82603_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
+	at org.springframework.web.multipart.support.StandardServletMultipartResolver.cleanupMultipart(StandardServletMultipartResolver.java:134)
+	at org.springframework.web.servlet.DispatcherServlet.cleanupMultipart(DispatcherServlet.java:1251)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1108)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.7143613395303779877\work\Tomcat\localhost\ROOT\upload_7b08964e_2c6b_4976_9e35_3e23cfe82603_00000000.tmp
+	... 44 common frames omitted
+2026-05-04 17:43:51.709 [http-nio-8080-exec-1] WARN  o.apache.catalina.connector.Request - Failed to deleted temporary file used for part [file]
+java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.7143613395303779877\work\Tomcat\localhost\ROOT\upload_7b08964e_2c6b_4976_9e35_3e23cfe82603_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
+	at org.apache.catalina.connector.Request.recycle(Request.java:475)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:420)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.7143613395303779877\work\Tomcat\localhost\ROOT\upload_7b08964e_2c6b_4976_9e35_3e23cfe82603_00000000.tmp
+	... 13 common frames omitted
+2026-05-04 17:44:16.843 [http-nio-8080-exec-4] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=3140 | key_prefix=3263952d...
+2026-05-04 17:44:17.408 [http-nio-8080-exec-4] ERROR com.faqrobot.service.LLMService - LLM call failed: url=https://open.bigmodel.cn/api/paas/v4/chat/completions, error=429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-04 17:44:17.409 [http-nio-8080-exec-4] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: LLM 调用异常: 429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-04 17:44:31.002 [http-nio-8080-exec-6] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=4123 | key_prefix=3263952d...
+2026-05-04 17:44:31.296 [http-nio-8080-exec-6] ERROR com.faqrobot.service.LLMService - LLM call failed: url=https://open.bigmodel.cn/api/paas/v4/chat/completions, error=429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-04 17:44:31.297 [http-nio-8080-exec-6] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: LLM 调用异常: 429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
