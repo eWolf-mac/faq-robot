@@ -34,3 +34,5 @@ build/
 
 .gitlab-ci.yml
 .gitattributes
+
+data/
