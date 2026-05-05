@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +17,9 @@ import java.util.regex.Pattern;
  * <p>策略优先级（从最明确的结构信号到最弱）：
  * <ol>
  *   <li>Markdown 标题模式 — 检测到 # 标题，按标题切分</li>
- *   <li>重复字段模式 — 每行都是 {@code key: value} 格式且 key 呈周期性重复，
- *       按周期分片，首个字段的值作为标题</li>
+ *   <li>灵活记录模式 — 每行都是 {@code key: value} 格式，自动发现周期性出现的
+ *       "边界字段"作为每条记录的开始，按记录分片</li>
+ *   <li>固定周期字段模式 — key 呈严格周期性重复（周期 2~8），按周期分片</li>
  *   <li>二行组模式 — 非空行成对出现（常见于 Q&A 文档），按每 2 行分片</li>
  *   <li>逐行模式 — 大多数非空行孤立出现，按行分片</li>
  *   <li>段落模式（回退）— 按空行分段，控制每片大小</li>
@@ -51,26 +54,33 @@ public class ContentChunker {
             return chunkByHeaders(lines);
         }
 
-        // 2. 重复字段模式（key: value 行周周期性重复）
+        // 2. 灵活记录模式 — 自动发现周期性边界字段
+        String recordBoundary = detectRecordPattern(lines);
+        if (recordBoundary != null) {
+            log.info("检测到灵活记录模式，边界字段='{}'，按记录分片", recordBoundary);
+            return chunkByRecordPattern(lines, recordBoundary);
+        }
+
+        // 3. 固定周期字段模式（key: value 行周期性重复）
         int fieldCycle = detectFieldCycle(lines);
         if (fieldCycle > 0) {
             log.info("检测到重复字段模式，周期={}，按字段组分片", fieldCycle);
             return chunkByFieldPattern(lines, fieldCycle);
         }
 
-        // 3. 分析非空行的连续段结构
+        // 4. 分析非空行的连续段结构
         int[] runHistogram = buildRunHistogram(lines);
         int totalGrouped = runHistogram[0] + runHistogram[1] + runHistogram[2];
         if (totalGrouped == 0) return Collections.emptyList();
 
-        // 4. 二行组为主 → Q&A / 成对结构
+        // 5. 二行组为主 → Q&A / 成对结构
         double pairRatio = (double) runHistogram[1] / totalGrouped;
         if (pairRatio >= 0.4) {
             log.info("检测到二行组结构 (占比 {:.0%})，按每 2 行分片", pairRatio);
             return chunkByLineGroups(lines, 2);
         }
 
-        // 5. 孤行为主 + 弱段落结构 → 逐行模式
+        // 6. 孤行为主 + 弱段落结构 → 逐行模式
         double singleRatio = (double) runHistogram[0] / totalGrouped;
         double emptyRatio = calcEmptyRatio(lines);
         if (singleRatio >= 0.5 && emptyRatio < 0.15) {
@@ -78,7 +88,7 @@ public class ContentChunker {
             return chunkByLineGroups(lines, 1);
         }
 
-        // 6. 回退到段落模式
+        // 7. 回退到段落模式
         log.info("使用段落模式分片 (二行组 {:.0%}, 孤行 {:.0%}, 空行 {:.0%})",
                 pairRatio, singleRatio, emptyRatio);
         return chunkByParagraphs(text);
@@ -161,6 +171,107 @@ public class ContentChunker {
             }
         }
         return total >= 4 && (double) matches / total >= 0.95;
+    }
+
+    // ==================== 灵活记录模式 ====================
+
+    /**
+     * 通过间隔一致性自动发现作为每条记录起始的"边界字段"。
+     * 适用于行级 key: value 格式的重复记录（各记录行数可不一致）。
+     *
+     * @return 边界字段名，未检测到返回 null
+     */
+    private String detectRecordPattern(String[] lines) {
+        List<String> fields = new ArrayList<>();
+        int nonEmptyCount = 0;
+        for (String line : lines) {
+            String trimmed = line.trim();
+            if (trimmed.isEmpty()) continue;
+            nonEmptyCount++;
+            String field = extractFieldName(trimmed);
+            if (field == null) return null;
+            fields.add(field);
+        }
+
+        if (fields.size() < 6) return null;
+        double kvRatio = (double) fields.size() / nonEmptyCount;
+        if (kvRatio < 0.7) return null;
+
+        Map<String, List<Integer>> positions = new LinkedHashMap<>();
+        for (int i = 0; i < fields.size(); i++) {
+            positions.computeIfAbsent(fields.get(i), k -> new ArrayList<>()).add(i);
+        }
+
+        String bestField = null;
+        double bestCv = Double.MAX_VALUE;
+        int bestFirstPos = Integer.MAX_VALUE;
+
+        for (Map.Entry<String, List<Integer>> entry : positions.entrySet()) {
+            List<Integer> pos = entry.getValue();
+            if (pos.size() < 3) continue;
+
+            // 计算间隔的变异系数（CV = stddev / mean），CV 越小越周期性
+            double mean = 0;
+            double[] gaps = new double[pos.size() - 1];
+            for (int i = 1; i < pos.size(); i++) {
+                gaps[i - 1] = pos.get(i) - pos.get(i - 1);
+                mean += gaps[i - 1];
+            }
+            mean /= gaps.length;
+            double variance = 0;
+            for (double g : gaps) {
+                variance += (g - mean) * (g - mean);
+            }
+            variance /= gaps.length;
+            double cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
+
+            if (cv > 0.35) continue;
+
+            if (cv < bestCv - 0.001
+                    || (Math.abs(cv - bestCv) < 0.001 && pos.get(0) < bestFirstPos)) {
+                bestCv = cv;
+                bestField = entry.getKey();
+                bestFirstPos = pos.get(0);
+            }
+        }
+
+        return bestField;
+    }
+
+    /**
+     * 按边界字段切分记录，每条记录一个 Chunk
+     */
+    private List<Chunk> chunkByRecordPattern(String[] lines, String boundaryField) {
+        List<Chunk> result = new ArrayList<>();
+        List<String> recordLines = new ArrayList<>();
+
+        for (String line : lines) {
+            String trimmed = line.trim();
+            if (trimmed.isEmpty()) continue;
+
+            String field = extractFieldName(trimmed);
+            if (field == null) continue;
+
+            if (boundaryField.equals(field)) {
+                if (!recordLines.isEmpty()) {
+                    result.add(buildRecordChunk(recordLines));
+                    recordLines.clear();
+                }
+            }
+            recordLines.add(trimmed);
+        }
+
+        if (!recordLines.isEmpty()) {
+            result.add(buildRecordChunk(recordLines));
+        }
+
+        return result;
+    }
+
+    private Chunk buildRecordChunk(List<String> lines) {
+        String title = extractFieldValue(lines.get(0));
+        String content = String.join("\n", lines);
+        return new Chunk(title, content);
     }
 
     // ==================== 连续段结构检测 ====================
@@ -249,6 +360,10 @@ public class ContentChunker {
     private String extractFieldValue(String line) {
         String value = line.replaceFirst(
                 "^\"[^\"]+\"\\s*:\\s*|^[^：:\\s]+\\s*[：:]\\s*", "").trim();
+        // 剥离尾部逗号（兼容 JSON 风格格式）
+        if (value.endsWith(",")) {
+            value = value.substring(0, value.length() - 1).trim();
+        }
         if (value.startsWith("\"") && value.endsWith("\"")) {
             value = value.substring(1, value.length() - 1);
         }
