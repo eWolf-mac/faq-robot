@@ -1,602 +1,96 @@
-2026-05-05 11:47:43.148 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 12868 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
-2026-05-05 11:47:43.162 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-05-05 11:47:43.162 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
-2026-05-05 11:47:43.622 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-05-05 11:47:43.659 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 1 JPA repository interfaces.
-2026-05-05 11:47:44.021 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-05-05 11:47:44.028 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-05-05 11:47:44.029 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-05-05 11:47:44.030 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-05-05 11:47:44.189 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-05-05 11:47:44.189 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 990 ms
-2026-05-05 11:47:44.211 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-05-05 11:47:48.457 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-05-05 11:47:48.465 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
-2026-05-05 11:47:48.555 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-05-05 11:47:48.585 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
-2026-05-05 11:47:48.678 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2026-05-05 11:47:48.745 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2026-05-05 11:47:49.121 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2026-05-05 11:47:49.128 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-05-05 11:47:49.481 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 189 docs
-2026-05-05 11:47:49.536 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-05-05 11:47:49.634 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
-2026-05-05 11:47:49.933 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-05-05 11:47:49.973 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-2026-05-05 11:47:49.981 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 7.212 seconds (JVM running for 7.915)
-2026-05-05 11:48:48.939 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-05-05 11:48:48.939 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-05-05 11:48:48.940 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-05-05 11:57:42.333 [http-nio-8080-exec-7] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=446 | key_prefix=3263952d...
-2026-05-05 11:58:07.522 [http-nio-8080-exec-7] INFO  com.faqrobot.service.LLMService - LLM answered: 0 chars, model: glm-4.7-flash
-2026-05-05 11:58:07.522 [http-nio-8080-exec-7] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: null
-2026-05-05 14:25:40.326 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 4184 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
-2026-05-05 14:25:40.326 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-05-05 14:25:40.326 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
-2026-05-05 14:25:41.050 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-05-05 14:25:41.097 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 1 JPA repository interfaces.
-2026-05-05 14:25:41.584 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-05-05 14:25:41.584 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-05-05 14:25:41.584 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-05-05 14:25:41.584 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-05-05 14:25:41.880 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-05-05 14:25:41.880 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1507 ms
-2026-05-05 14:25:41.898 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-05-05 14:25:48.216 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-05-05 14:25:48.216 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
-2026-05-05 14:25:48.485 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-05-05 14:25:48.547 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
-2026-05-05 14:25:48.784 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2026-05-05 14:25:48.862 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2026-05-05 14:25:49.331 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2026-05-05 14:25:49.331 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-05-05 14:25:49.897 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 189 docs
-2026-05-05 14:25:50.023 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-05-05 14:25:50.148 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
-2026-05-05 14:25:50.463 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-05-05 14:25:50.510 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-2026-05-05 14:25:50.526 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 10.737 seconds (JVM running for 11.828)
-2026-05-05 14:26:27.509 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-05-05 14:26:27.510 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-05-05 14:26:27.511 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-05-05 14:26:39.460 [http-nio-8080-exec-4] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=446 | key_prefix=3263952d...
-2026-05-05 14:26:59.184 [http-nio-8080-exec-4] INFO  com.faqrobot.service.LLMService - LLM answered: 139 chars, model: glm-4.7-flash
-2026-05-05 14:44:50.953 [http-nio-8080-exec-5] INFO  c.faqrobot.service.IngestionService - 文件导入已删除: parentId=385, 分片数=181
-2026-05-05 14:44:51.020 [http-nio-8080-exec-5] INFO  c.f.controller.KnowledgeController - 文件导入统一删除完成: parentId=385, 分片数=181
-2026-05-05 14:45:00.117 [http-nio-8080-exec-7] INFO  c.f.controller.KnowledgeController - 收到文件导入请求: 质量答题2.txt (大小: 68005 bytes)
-2026-05-05 14:45:00.118 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - ========== 开始导入文件: 质量答题2.txt ==========
-2026-05-05 14:45:00.118 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 提取文件文本内容...
-2026-05-05 14:45:00.141 [http-nio-8080-exec-7] INFO  c.faqrobot.service.FileTextExtractor - 文本解码: txt 使用 UTF-8, 36641 字符
-2026-05-05 14:45:00.141 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 文本提取完成，共 36641 字符
-2026-05-05 14:45:00.141 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService -   提取内容前200字: "title": "请选出以下不属于慕思质量哲学的选项",
-"optionA": "工匠精神",
-"optionB": "智造精品",
-"optionC": "极致服务",
-"optionD": "客户至上",
-"correct": "D",
-"title": "请选出不符合质量定义的选项",
-"optionA": "某产品超过有效期说明某产品质量不好",
-"optionB": "
-2026-05-05 14:45:00.141 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 内容分片中...
-2026-05-05 14:45:00.144 [http-nio-8080-exec-7] INFO  com.faqrobot.service.ContentChunker - 使用段落模式分片 (二行组 {:.0%}, 孤行 {:.0%}, 空行 {:.0%})
-2026-05-05 14:45:00.148 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 分片完成，共 47 个分片
-2026-05-05 14:45:00.148 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 提取全局关键词...
-2026-05-05 14:45:00.257 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 全局关键词: [架构, 质量, 数据, 业务, 流程, 问题, 应用, 原因, 现象, 分析, 标准, 产品, 设计, 循环, 水平, 企业, 计划, 改进, 模型, 模块, how, 系统, 措施, 进行]
-2026-05-05 14:45:00.257 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 保存父条目到数据库和索引...
-2026-05-05 14:45:00.364 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 父条目已保存, ID=577
-2026-05-05 14:45:00.474 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[1/47] 已保存, ID=578, 标题="title": "请选出以下不属于慕思质量哲学的选项",
-2026-05-05 14:45:00.564 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[2/47] 已保存, ID=579, 标题="optionA": "是企业文化的重要组成部分，是组织质量...
-2026-05-05 14:45:00.665 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[3/47] 已保存, ID=580, 标题=检验",
-2026-05-05 14:45:00.748 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[4/47] 已保存, ID=581, 标题="optionA": "通过采取各种有效措施，提高产品、过程或体系满足质量要求的能力,使产品质量维持在一定的水平。",
-2026-05-05 14:45:00.835 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[5/47] 已保存, ID=582, 标题="correct": "B,D",
-2026-05-05 14:45:00.949 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[6/47] 已保存, ID=583, 标题="optionA": "1）分析现状，找出问题；...
-2026-05-05 14:45:01.031 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[7/47] 已保存, ID=584, 标题="optionA": "戴明",
-2026-05-05 14:45:01.122 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[8/47] 已保存, ID=585, 标题="correct": "B",
-2026-05-05 14:45:01.219 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[9/47] 已保存, ID=586, 标题=是属于哪一项定理？",
-2026-05-05 14:45:01.327 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[10/47] 已保存, ID=587, 标题="optionC": "不断加强自我、自我改进",
-2026-05-05 14:45:01.528 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[11/47] 已保存, ID=588, 标题="title": "朱兰在82岁高龄时发表了一篇著名论文《...
-2026-05-05 14:45:01.644 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[12/47] 已保存, ID=589, 标题=\n（4）制定控制计划。",
-2026-05-05 14:45:01.754 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[13/47] 已保存, ID=590, 标题="optionC": "通过优化质量相关流程，而达到新的更高的质量水平。",
-2026-05-05 14:45:01.879 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[14/47] 已保存, ID=591, 标题="title": "PDCA循环是美国质量管理专家（...
-2026-05-05 14:45:01.978 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[15/47] 已保存, ID=592, 标题="title": "PDCA是综合性循环，四个阶段是（  ）...
-2026-05-05 14:45:02.078 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[16/47] 已保存, ID=593, 标题="optionA": "找出主要原因",
-2026-05-05 14:45:02.185 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[17/47] 已保存, ID=594, 标题="optionA": "即针对所发现的问题以连续多个“为什么...
-2026-05-05 14:45:02.303 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[18/47] 已保存, ID=595, 标题=为什么流程上无法预防（环境）。",
-2026-05-05 14:45:02.501 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[19/47] 已保存, ID=596, 标题=",
-"optionB": "1、通过组织层层追问，直到根...
-2026-05-05 14:45:02.623 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[20/47] 已保存, ID=597, 标题="optionD": "追问的过程中，要不断深入，控制提问次数，要直到有效应对该原因后可以防止问题再次发生为止。",
-2026-05-05 14:45:02.727 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[21/47] 已保存, ID=598, 标题="optionD": "追问的过程中，要不断深入，不拘泥于次数，而是要直到有效应对该原因后可以防止问题再次发生为止。",
-2026-05-05 14:45:02.855 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[22/47] 已保存, ID=599, 标题="optionA": "提前教育：通过教育，提前让对方的大脑里拥有某种新认知。",
-2026-05-05 14:45:02.974 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[23/47] 已保存, ID=600, 标题=(2) M（Measurable）可达到、可实现的；...
-2026-05-05 14:45:03.107 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[24/47] 已保存, ID=601, 标题="optionD": "给出具体解决办法以及步骤",
-2026-05-05 14:45:03.219 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[25/47] 已保存, ID=602, 标题="title": "职场沟通模型What-Why-How模型内容描述正确的是？",
-2026-05-05 14:45:03.329 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[26/47] 已保存, ID=603, 标题="optionB": "1、问题回放；...
-2026-05-05 14:45:03.428 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[27/47] 已保存, ID=604, 标题="correct": "A",
-2026-05-05 14:45:03.633 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[28/47] 已保存, ID=605, 标题="optionD": "亲和图的创始人是东京工业大学教授、人...
-2026-05-05 14:45:03.787 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[29/47] 已保存, ID=606, 标题="optionC": "主题聚焦原则",
-2026-05-05 14:45:03.903 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[30/47] 已保存, ID=607, 标题=",
-"optionA": "数据记录没有过时的信息",...
-2026-05-05 14:45:04.004 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[31/47] 已保存, ID=608, 标题="optionC": "数据质量现状评估",
-2026-05-05 14:45:04.095 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[32/47] 已保存, ID=609, 标题="optionC": "数据过时可能会影响决策的有效性",
-2026-05-05 14:45:04.196 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[33/47] 已保存, ID=610, 标题="title": "流程管理平台EPROS系统浏览端（即用户端）可进行以下那些操作？",
-2026-05-05 14:45:04.305 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[34/47] 已保存, ID=611, 标题="optionB": "业务专家+流程专家",
-2026-05-05 14:45:04.404 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[35/47] 已保存, ID=612, 标题="optionD": "自动化（Automate）‌：采用信...
-2026-05-05 14:45:04.536 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[36/47] 已保存, ID=613, 标题="optionC": "流程专家熟悉流程设计工作与方法，应当承担流程设计的主导责任",
-2026-05-05 14:45:04.669 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[37/47] 已保存, ID=614, 标题="optionB": "开票流程",
-2026-05-05 14:45:04.894 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[38/47] 已保存, ID=615, 标题="optionC": "降低运营成本",
-2026-05-05 14:45:05.009 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[39/47] 已保存, ID=616, 标题="title": "关于架构制品描述正确的有？",
-2026-05-05 14:45:05.128 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[40/47] 已保存, ID=617, 标题="optionD": "提供了一个架构内容的结构化模型，确保这些设计成果定义一致、结构化的存储和展现；",
-2026-05-05 14:45:05.252 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[41/47] 已保存, ID=618, 标题="optionA": "技术分类",
-2026-05-05 14:45:05.377 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[42/47] 已保存, ID=619, 标题="optionA": "优先使用成熟先进技术",
-2026-05-05 14:45:05.494 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[43/47] 已保存, ID=620, 标题="optionB": "若没有流程架构L1，但是有业务能力类，则可将业务能力类作为应用域的输入；",
-2026-05-05 14:45:05.617 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[44/47] 已保存, ID=621, 标题="optionD": "参考IT现状：分析应用系统模块现状，...
-2026-05-05 14:45:05.752 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[45/47] 已保存, ID=622, 标题="optionD": "12期",
-2026-05-05 14:45:05.919 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[46/47] 已保存, ID=623, 标题="optionD": "5M1E",
-2026-05-05 14:45:06.071 [http-nio-8080-exec-7] DEBUG c.faqrobot.service.IngestionService -   子分片[47/47] 已保存, ID=624, 标题="optionD": "不重要但紧急",
-2026-05-05 14:45:06.071 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - ========== 导入完成: 质量答题2.txt → 47 个分片, 耗时 5953ms ==========
-2026-05-05 14:45:06.073 [http-nio-8080-exec-7] INFO  c.f.controller.KnowledgeController - 文件导入成功: 质量答题2.txt, 分片数: 47
-2026-05-05 14:45:06.092 [http-nio-8080-exec-7] WARN  o.s.w.m.s.StandardServletMultipartResolver - Failed to perform cleanup of multipart items
-java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.4412994275483673854\work\Tomcat\localhost\ROOT\upload_5ec5f4ee_1ba5_444d_82d7_9f99fdc1b5d1_00000000.tmp
-	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
-	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
-	at org.springframework.web.multipart.support.StandardServletMultipartResolver.cleanupMultipart(StandardServletMultipartResolver.java:134)
-	at org.springframework.web.servlet.DispatcherServlet.cleanupMultipart(DispatcherServlet.java:1251)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1108)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.4412994275483673854\work\Tomcat\localhost\ROOT\upload_5ec5f4ee_1ba5_444d_82d7_9f99fdc1b5d1_00000000.tmp
-	... 44 common frames omitted
-2026-05-05 14:45:06.093 [http-nio-8080-exec-7] WARN  o.apache.catalina.connector.Request - Failed to deleted temporary file used for part [file]
-java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.4412994275483673854\work\Tomcat\localhost\ROOT\upload_5ec5f4ee_1ba5_444d_82d7_9f99fdc1b5d1_00000000.tmp
-	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
-	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
-	at org.apache.catalina.connector.Request.recycle(Request.java:475)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:420)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.4412994275483673854\work\Tomcat\localhost\ROOT\upload_5ec5f4ee_1ba5_444d_82d7_9f99fdc1b5d1_00000000.tmp
-	... 13 common frames omitted
-2026-05-05 15:36:27.736 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 10412 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
-2026-05-05 15:36:27.739 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-05-05 15:36:27.739 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
-2026-05-05 15:36:28.189 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-05-05 15:36:28.224 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 1 JPA repository interfaces.
-2026-05-05 15:36:28.539 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-05-05 15:36:28.544 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-05-05 15:36:28.545 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-05-05 15:36:28.545 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-05-05 15:36:28.689 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-05-05 15:36:28.689 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 910 ms
-2026-05-05 15:36:28.707 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-05-05 15:36:32.924 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-05-05 15:36:32.931 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
-2026-05-05 15:36:33.015 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-05-05 15:36:33.042 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
-2026-05-05 15:36:33.132 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2026-05-05 15:36:33.196 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2026-05-05 15:36:33.556 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2026-05-05 15:36:33.563 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-05-05 15:36:33.856 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 55 docs
-2026-05-05 15:36:33.911 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-05-05 15:36:33.992 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
-2026-05-05 15:36:34.250 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-05-05 15:36:34.286 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-2026-05-05 15:36:34.293 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 6.901 seconds (JVM running for 7.532)
-2026-05-05 15:37:27.964 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-05-05 15:37:27.964 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-05-05 15:37:27.965 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-05-05 15:37:39.591 [http-nio-8080-exec-7] INFO  c.faqrobot.service.IngestionService - 文件导入已删除: parentId=577, 分片数=47
-2026-05-05 15:37:39.609 [http-nio-8080-exec-7] INFO  c.f.controller.KnowledgeController - 文件导入统一删除完成: parentId=577, 分片数=47
-2026-05-05 15:37:47.732 [http-nio-8080-exec-1] INFO  c.f.controller.KnowledgeController - 收到文件导入请求: 质量答题2.txt (大小: 68005 bytes)
-2026-05-05 15:37:47.733 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - ========== 开始导入文件: 质量答题2.txt ==========
-2026-05-05 15:37:47.733 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 提取文件文本内容...
-2026-05-05 15:37:47.742 [http-nio-8080-exec-1] INFO  c.faqrobot.service.FileTextExtractor - 文本解码: txt 使用 UTF-8, 36641 字符
-2026-05-05 15:37:47.743 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤1/4] 文本提取完成，共 36641 字符
-2026-05-05 15:37:47.743 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService -   提取内容前200字: "title": "请选出以下不属于慕思质量哲学的选项",
-"optionA": "工匠精神",
-"optionB": "智造精品",
-"optionC": "极致服务",
-"optionD": "客户至上",
-"correct": "D",
-"title": "请选出不符合质量定义的选项",
-"optionA": "某产品超过有效期说明某产品质量不好",
-"optionB": "
-2026-05-05 15:37:47.743 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 内容分片中...
-2026-05-05 15:37:47.746 [http-nio-8080-exec-1] INFO  com.faqrobot.service.ContentChunker - 检测到灵活记录模式，边界字段='title'，按记录分片
-2026-05-05 15:37:47.750 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤2/4] 分片完成，共 181 个分片
-2026-05-05 15:37:47.750 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 提取全局关键词...
-2026-05-05 15:37:47.998 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤3/4] 全局关键词: [问题, 质量, 架构, 流程, 数据, 业务, 原因, 分析, 应用, 进行, 设计, 标准, 现象, 描述, 产品, 改进, 系统, 企业, 计划, 要求, 水平, 相关, 模块, why]
-2026-05-05 15:37:47.999 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 保存父条目到数据库和索引...
-2026-05-05 15:37:48.135 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - [步骤4/4] 父条目已保存, ID=641
-2026-05-05 15:37:48.234 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[1/181] 已保存, ID=642, 标题=请选出以下不属于慕思质量哲学的选项
-2026-05-05 15:37:48.337 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[2/181] 已保存, ID=643, 标题=请选出不符合质量定义的选项
-2026-05-05 15:37:48.473 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[3/181] 已保存, ID=644, 标题=以下属于“智造精品”诠释内容的是
-2026-05-05 15:37:48.580 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[4/181] 已保存, ID=645, 标题=以下不属于“持续改进”诠释内容的是
-2026-05-05 15:37:48.674 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[5/181] 已保存, ID=646, 标题=“体贴入微，关爱倍至，超越期待，无所不至” 是 （  ）的诠释。
-2026-05-05 15:37:48.787 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[6/181] 已保存, ID=647, 标题=什么是质量文化？
-2026-05-05 15:37:48.897 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[7/181] 已保存, ID=648, 标题=质量是______的责任?
-2026-05-05 15:37:48.999 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[8/181] 已保存, ID=649, 标题=__________属于慕思质量方针的内容。
-2026-05-05 15:37:49.091 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[9/181] 已保存, ID=650, 标题=质量具有的广义性是指？
-2026-05-05 15:37:49.213 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[10/181] 已保存, ID=651, 标题=产品质量是___出来的，不是____出来的。
-2026-05-05 15:37:49.392 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[11/181] 已保存, ID=652, 标题=对于产品质量来说，不是____分就是____分。
-2026-05-05 15:37:49.505 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[12/181] 已保存, ID=653, 标题=“质量、服务”是我对慕思最自豪、最有感觉的四个字。我们今天思考的不是营销、推广，以及如何说服客户，而是问自己有无________把我们的产品和服务做好，能不能让客户满意。 ——王炳坤董事长
-2026-05-05 15:37:49.618 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[13/181] 已保存, ID=654, 标题=朱兰三部曲有（    、    、    ）
-2026-05-05 15:37:49.709 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[14/181] 已保存, ID=655, 标题=质量不是来自于检查，而是来源于过程的改进。这句话是出自？
-2026-05-05 15:37:49.825 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[15/181] 已保存, ID=656, 标题=什么是质量改进？请选择描述最准确的选项。
-2026-05-05 15:37:49.929 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[16/181] 已保存, ID=657, 标题=什么是质量控制？请选择描述最准确的选项。
-2026-05-05 15:37:50.027 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[17/181] 已保存, ID=658, 标题=质量可以用于描述以下哪些方面
-2026-05-05 15:37:50.134 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[18/181] 已保存, ID=659, 标题=请根据慕思质量方针选择正确的选项进行补充，“提供（  ）产品和（  ）健康睡眠体验”。
-2026-05-05 15:37:50.251 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[19/181] 已保存, ID=660, 标题=工匠精神就是要求我们做到（ ）。
-2026-05-05 15:37:50.474 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[20/181] 已保存, ID=661, 标题=持续改进的工具有哪些？
-2026-05-05 15:37:50.591 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[21/181] 已保存, ID=662, 标题=柏拉图的分类有哪些？
-2026-05-05 15:37:50.707 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[22/181] 已保存, ID=663, 标题=柏拉图的作用有哪些？
-2026-05-05 15:37:50.810 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[23/181] 已保存, ID=664, 标题=5M1E分析法包含？
-2026-05-05 15:37:50.921 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[24/181] 已保存, ID=665, 标题=PDCA的应用步骤正确的是？
-2026-05-05 15:37:51.046 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[25/181] 已保存, ID=666, 标题=因果图是谁提出来的？
-2026-05-05 15:37:51.192 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[26/181] 已保存, ID=667, 标题=PDCA的释义正确的是？
-2026-05-05 15:37:51.309 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[27/181] 已保存, ID=668, 标题=PDCA的特点有哪些？
-2026-05-05 15:37:51.553 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[28/181] 已保存, ID=669, 标题=什么是因果图？请选择描述最完整的选项。
-2026-05-05 15:37:51.735 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[29/181] 已保存, ID=670, 标题=“零缺陷之父”是指？
-2026-05-05 15:37:51.852 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[30/181] 已保存, ID=671, 标题=克劳士比的四条质量管理定理旨在回答哪几个问题？
-2026-05-05 15:37:51.958 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[31/181] 已保存, ID=672, 标题=属于克劳士比的4条质量管理定理的有？
-2026-05-05 15:37:52.059 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[32/181] 已保存, ID=673, 标题=“质量符合要求的标准”解释最完整的是？
-2026-05-05 15:37:52.168 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[33/181] 已保存, ID=674, 标题=认为检查、分类、评估都只是事后弥补，因而“提升质量的良方是预防，而不是检验”。是属于哪一项定理？
-2026-05-05 15:37:52.276 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[34/181] 已保存, ID=675, 标题=质量管理最为需要的是？
-2026-05-05 15:37:52.368 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[35/181] 已保存, ID=676, 标题=克劳士比认为酿成错误的因素有哪两种？
-2026-05-05 15:37:52.483 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[36/181] 已保存, ID=677, 标题=工作标准零缺陷强调的是？
-2026-05-05 15:37:52.617 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[37/181] 已保存, ID=678, 标题=以“产品不合标准的代价”衡量质量是指？
-2026-05-05 15:37:52.836 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[38/181] 已保存, ID=679, 标题=克劳士比说：“零缺陷之旅是一个（    、    ）的过程”。
-2026-05-05 15:37:52.945 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[39/181] 已保存, ID=680, 标题=被美国《时代》杂志誉为“本世纪伟大的管理思想家”、“品质大师中的大师”、“零缺陷之父”、“一代质量宗师”的是？
-2026-05-05 15:37:53.036 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[40/181] 已保存, ID=681, 标题=克劳士比的质量管理定理有几条？
-2026-05-05 15:37:53.132 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[41/181] 已保存, ID=682, 标题=描述持续质量改进的目的及重要性的有哪些？
-2026-05-05 15:37:53.214 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[42/181] 已保存, ID=683, 标题=质量改进致力于？
-2026-05-05 15:37:53.305 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[43/181] 已保存, ID=684, 标题=质量控制致力于？
-2026-05-05 15:37:53.398 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[44/181] 已保存, ID=685, 标题=朱兰在82岁高龄时发表了一篇著名论文《   》，其副标题为“一种普遍适用的质量管理方法”，这就是被世界各国广为推崇的“朱兰三部曲”
-2026-05-05 15:37:53.480 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[45/181] 已保存, ID=686, 标题=质量计划从（    ）开始。
-2026-05-05 15:37:53.610 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[46/181] 已保存, ID=687, 标题=约瑟夫·M·朱兰是一位长寿老人，在（   ）以103岁高龄辞世。
-2026-05-05 15:37:53.805 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[47/181] 已保存, ID=688, 标题=明确（       和      ），是质量管理的前提和基础。
-2026-05-05 15:37:53.953 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[48/181] 已保存, ID=689, 标题=质量计划的步骤是？
-2026-05-05 15:37:54.046 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[49/181] 已保存, ID=690, 标题=质量控制对（   ）进行控制保证质量目标的实现。
-2026-05-05 15:37:54.146 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[50/181] 已保存, ID=691, 标题=质量控制步骤正确的是？
-2026-05-05 15:37:54.224 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[51/181] 已保存, ID=692, 标题=什么是质量改进？
-2026-05-05 15:37:54.322 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[52/181] 已保存, ID=693, 标题=质量改进的步骤为？
-2026-05-05 15:37:54.456 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[53/181] 已保存, ID=694, 标题=质量是一种（   ），即产品在使用期间能满足使用者的要求。
-2026-05-05 15:37:54.538 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[54/181] 已保存, ID=695, 标题=质量是一种实用性，即产品在使用期间能满足使用者的要求。这几句话出自？
-2026-05-05 15:37:54.676 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[55/181] 已保存, ID=696, 标题=PDCA循环是美国质量管理专家（    ）博士首先提出的，由（    ）采纳、宣传，获得普及，从而也被称为（    ）。
-2026-05-05 15:37:54.820 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[56/181] 已保存, ID=697, 标题=PDCA循环的特点有哪些？
-2026-05-05 15:37:54.932 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[57/181] 已保存, ID=698, 标题=下列哪些是属于做计划的注意事项？
-2026-05-05 15:37:55.027 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[58/181] 已保存, ID=699, 标题=5W2H是指？
-2026-05-05 15:37:55.136 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[59/181] 已保存, ID=700, 标题=PDCA是综合性循环，四个阶段是（  ），它们之间不是截然分开的，推动PDCA循环的关键是（   ）阶段。
-2026-05-05 15:37:55.253 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[60/181] 已保存, ID=701, 标题=PDCA大环套小环的意思是指？
-2026-05-05 15:37:55.345 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[61/181] 已保存, ID=702, 标题=PDCA循环有几个步骤？
-2026-05-05 15:37:55.446 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[62/181] 已保存, ID=703, 标题=PDCA循环第一个步骤是？
-2026-05-05 15:37:55.559 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[63/181] 已保存, ID=704, 标题=PDCA循环第二个步骤是？
-2026-05-05 15:37:55.718 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[64/181] 已保存, ID=705, 标题=PDCA循环第三个步骤是？
-2026-05-05 15:37:55.908 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[65/181] 已保存, ID=706, 标题=PDCA循环第四个步骤是？
-2026-05-05 15:37:56.067 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[66/181] 已保存, ID=707, 标题=PDCA循环第五个步骤是？
-2026-05-05 15:37:56.176 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[67/181] 已保存, ID=708, 标题=PDCA循环第六个步骤是？
-2026-05-05 15:37:56.297 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[68/181] 已保存, ID=709, 标题=PDCA循环第七个步骤是？
-2026-05-05 15:37:56.421 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[69/181] 已保存, ID=710, 标题=PDCA循环第八个步骤是？
-2026-05-05 15:37:56.588 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[70/181] 已保存, ID=711, 标题=什么是5Why分析法？请选择最佳描述。
-2026-05-05 15:37:56.677 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[71/181] 已保存, ID=712, 标题=5Why核心是不急于立即解决（   ）问题，而是从（    ）着手，沿着（   ）关系链条，顺藤摸瓜，挖出问题根源，从而找到（   ）对策。
-2026-05-05 15:37:56.794 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[72/181] 已保存, ID=713, 标题=进行5Why分析时,对问题描述说法正确的是？
-2026-05-05 15:37:56.918 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[73/181] 已保存, ID=714, 标题=进行5Why分析时,对相关方参与说法正确的是？
-2026-05-05 15:37:57.082 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[74/181] 已保存, ID=715, 标题=进行5Why分析时,对根因分析说法正确的是？
-2026-05-05 15:37:57.211 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[75/181] 已保存, ID=716, 标题=掌握5Why必练的几大绝技是？
-2026-05-05 15:37:57.311 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[76/181] 已保存, ID=717, 标题=5Why法中，关于绝技\"现象的要因要列举完全\"说法正确的是？
-2026-05-05 15:37:57.411 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[77/181] 已保存, ID=718, 标题=5Why法中，关于绝技\"因果链正确且可追溯\"说法正确的是？
-2026-05-05 15:37:57.531 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[78/181] 已保存, ID=719, 标题=5Why法中，关于绝技\"分析要深入，直到根本原因\"说法正确的是？
-2026-05-05 15:37:57.661 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[79/181] 已保存, ID=720, 标题=5Why法中，关于绝技\"定量分析，不使用笼统描述\"说法正确的是？
-2026-05-05 15:37:57.786 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[80/181] 已保存, ID=721, 标题=下列哪些是属于5Why过程中的雷区？
-2026-05-05 15:37:57.912 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[81/181] 已保存, ID=722, 标题=沟通中，说服不了对方的原因可能有哪些？
-2026-05-05 15:37:58.070 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[82/181] 已保存, ID=723, 标题=当遇到认知不同的沟通对象时，有效的方法有？
-2026-05-05 15:37:58.249 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[83/181] 已保存, ID=724, 标题=SMART原则是目标管理的一个很好的方法，描述正确的是？
-2026-05-05 15:37:58.391 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[84/181] 已保存, ID=725, 标题=双向沟通中，当对方对你的信任度不够的时候，可以如何攻略？
-2026-05-05 15:37:58.493 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[85/181] 已保存, ID=726, 标题=当遇到不着急的拖延症沟通对象时，最佳的处理办法是？
-2026-05-05 15:37:58.598 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[86/181] 已保存, ID=727, 标题=A to H 模型中F、G依次是代表什么意思？
-2026-05-05 15:37:58.702 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[87/181] 已保存, ID=728, 标题=总分总基本结构沟通模型中，沟通顺序正确的是？
-2026-05-05 15:37:58.802 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[88/181] 已保存, ID=729, 标题=总分总基本结构沟通模型中涉及的“要点”描述完整、正确的是？
-2026-05-05 15:37:58.895 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[89/181] 已保存, ID=730, 标题=在尽量短的时间内，能将你的方案讲清楚的职场沟通方法是？
-2026-05-05 15:37:59.015 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[90/181] 已保存, ID=731, 标题=职场沟通模型What-Why-How模型内容描述正确的是？
-2026-05-05 15:37:59.168 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[91/181] 已保存, ID=732, 标题=职场沟通模型What-Why-How模型又叫？
-2026-05-05 15:37:59.378 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[92/181] 已保存, ID=733, 标题=质量回溯的目的是？
-2026-05-05 15:37:59.504 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[93/181] 已保存, ID=734, 标题=质量回溯的步骤，最完整的选项是？
-2026-05-05 15:37:59.607 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[94/181] 已保存, ID=735, 标题=可用于根本原因分析的工具选项是？
-2026-05-05 15:37:59.708 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[95/181] 已保存, ID=736, 标题=质量回溯公式描述正确的是？
-2026-05-05 15:37:59.808 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[96/181] 已保存, ID=737, 标题=职场沟通的五大模型有哪些？
-2026-05-05 15:37:59.907 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[97/181] 已保存, ID=738, 标题=关于职场沟通方法两面法，描述正确的有？
-2026-05-05 15:38:00.000 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[98/181] 已保存, ID=739, 标题=关于亲和图的描述中正确的选项有哪些？
-2026-05-05 15:38:00.116 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[99/181] 已保存, ID=740, 标题=MECE分析法的描述中正确的选项有哪些？
-2026-05-05 15:38:00.257 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[100/181] 已保存, ID=741, 标题=关于头脑风暴法的描述中正确的选项有哪些？
-2026-05-05 15:38:00.442 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[101/181] 已保存, ID=742, 标题=头脑风暴法遵循的原则有哪些？
-2026-05-05 15:38:00.575 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[102/181] 已保存, ID=743, 标题=以下关于数据质量“有效性”的描述正确的是？
-2026-05-05 15:38:00.677 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[103/181] 已保存, ID=744, 标题=数据质量的“一致性”是指
-2026-05-05 15:38:00.774 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[104/181] 已保存, ID=745, 标题=数据质量的哪个维度是指数据是否与现实世界的真实情况相符？
-2026-05-05 15:38:00.849 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[105/181] 已保存, ID=746, 标题=数据质量的“完整性”维度主要关注
-2026-05-05 15:38:00.948 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[106/181] 已保存, ID=747, 标题=关于数据质量的“唯一性”维度，以下描述正确的是？
-2026-05-05 15:38:01.032 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[107/181] 已保存, ID=748, 标题=数据质量管理的主要目标是什么？
-2026-05-05 15:38:01.133 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[108/181] 已保存, ID=749, 标题=数据质量检查规则是根据（ ）制定的？
-2026-05-05 15:38:01.299 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[109/181] 已保存, ID=750, 标题=数据质量提升是一项（ ）的工作
-2026-05-05 15:38:01.567 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[110/181] 已保存, ID=751, 标题=当数据质量问题发生时，谁应负责业务领域内的沟通、协调以解决数据质量问题？
-2026-05-05 15:38:01.699 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[111/181] 已保存, ID=752, 标题=在数据质量提升工作中，哪个步骤通常是首要步骤？
-2026-05-05 15:38:01.791 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[112/181] 已保存, ID=753, 标题=衡量数据质量六性包括哪六性？
-2026-05-05 15:38:01.885 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[113/181] 已保存, ID=754, 标题=提高数据质量的好处包括哪些？
-2026-05-05 15:38:01.975 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[114/181] 已保存, ID=755, 标题=提高数据质量的保障措施包括哪些
-2026-05-05 15:38:02.093 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[115/181] 已保存, ID=756, 标题=实施数据质量根治方案的本质是
-2026-05-05 15:38:02.194 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[116/181] 已保存, ID=757, 标题=关于数据质量问题，以下哪些描述是正确的？
-2026-05-05 15:38:02.287 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[117/181] 已保存, ID=758, 标题=我们为什么需要流程？
-2026-05-05 15:38:02.448 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[118/181] 已保存, ID=759, 标题=流程架构（即业务架构）能给企业带来哪些价值？
-2026-05-05 15:38:02.744 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[119/181] 已保存, ID=760, 标题=什么是PO，什么是PC，他们各自的职责又是什么？
-2026-05-05 15:38:02.874 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[120/181] 已保存, ID=761, 标题=流程管理平台EPROS系统浏览端（即用户端）可进行以下那些操作？
-2026-05-05 15:38:03.002 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[121/181] 已保存, ID=762, 标题=流程绩效目标设置的维度有
-2026-05-05 15:38:03.119 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[122/181] 已保存, ID=763, 标题=优秀流程的特点包括？
-2026-05-05 15:38:03.244 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[123/181] 已保存, ID=764, 标题=流程设计的原则是
-2026-05-05 15:38:03.335 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[124/181] 已保存, ID=765, 标题=流程设计成功关键因素
-2026-05-05 15:38:03.432 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[125/181] 已保存, ID=766, 标题=职能型组织的特点包括？
-2026-05-05 15:38:03.553 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[126/181] 已保存, ID=767, 标题=流程型组织的特点包括？
-2026-05-05 15:38:03.719 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[127/181] 已保存, ID=768, 标题=流程优化ESIA分析法是指？
-2026-05-05 15:38:04.185 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[128/181] 已保存, ID=769, 标题=流程给企业和个人带来的价值，以下不包含？
-2026-05-05 15:38:04.324 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[129/181] 已保存, ID=770, 标题=以下哪项不属于流程管理的作用？
-2026-05-05 15:38:04.428 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[130/181] 已保存, ID=771, 标题=关于隐性流程显性化描述正确的是
-2026-05-05 15:38:05.116 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[131/181] 已保存, ID=772, 标题=对流程设计主体描述正确的是
-2026-05-05 15:38:05.300 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[132/181] 已保存, ID=773, 标题=对流程设计质量把控描述正确的是
-2026-05-05 15:38:05.425 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[133/181] 已保存, ID=774, 标题=关于制度与流程描述错误的是
-2026-05-05 15:38:05.533 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[134/181] 已保存, ID=775, 标题=关于业务场景描述正确的是
-2026-05-05 15:38:05.661 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[135/181] 已保存, ID=776, 标题=以下触发事件描述规范的是
-2026-05-05 15:38:05.802 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[136/181] 已保存, ID=777, 标题=以下哪个描述没有真正说清楚“流程的目的”?
-2026-05-05 15:38:05.976 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[137/181] 已保存, ID=778, 标题=流程设计应当围绕（ ）展开
-2026-05-05 15:38:06.126 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[138/181] 已保存, ID=779, 标题=流程现状问题分析的主要目的是
-2026-05-05 15:38:06.230 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[139/181] 已保存, ID=780, 标题=对流程运作过程中的风险控制起关键作用的评审、检查点的是
-2026-05-05 15:38:06.330 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[140/181] 已保存, ID=781, 标题=下列哪项不是流程自动化（Process Automation）带来的好处?
-2026-05-05 15:38:06.439 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[141/181] 已保存, ID=782, 标题=企业架构包含哪些？
-2026-05-05 15:38:06.548 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[142/181] 已保存, ID=783, 标题=慕思企业架构管理和运作的虚拟组织包含哪些？
-2026-05-05 15:38:06.674 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[143/181] 已保存, ID=784, 标题=关于企业架构描述正确的有哪些？
-2026-05-05 15:38:06.780 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[144/181] 已保存, ID=785, 标题=架构制品包含哪些？
-2026-05-05 15:38:06.922 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[145/181] 已保存, ID=786, 标题=关于架构制品描述正确的有？
-2026-05-05 15:38:07.161 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[146/181] 已保存, ID=787, 标题=公司或领域层的架构设计，内容包括哪些？
-2026-05-05 15:38:07.301 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[147/181] 已保存, ID=788, 标题=“监控和指导架构相关工作的实践；目标是实现预期的结果，并遵守相关的计划、标准和路线图，确保架构符合架构原则；包含对架构决策的审查、管理和监督”此描述属于？
-2026-05-05 15:38:07.418 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[148/181] 已保存, ID=789, 标题=关于企业架构原则，说法正确的有？
-2026-05-05 15:38:07.552 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[149/181] 已保存, ID=790, 标题=关于企业架构内容元模型，说法正确的有？
-2026-05-05 15:38:07.635 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[150/181] 已保存, ID=791, 标题=业务架构包含的要素有哪些？
-2026-05-05 15:38:07.735 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[151/181] 已保存, ID=792, 标题=信息架构包含的要素有哪些？
-2026-05-05 15:38:07.844 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[152/181] 已保存, ID=793, 标题=应用架构包含的要素有哪些？
-2026-05-05 15:38:07.962 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[153/181] 已保存, ID=794, 标题=技术架构包含的要素有哪些？
-2026-05-05 15:38:08.118 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[154/181] 已保存, ID=795, 标题=企业架构的整体原则包含哪些？
-2026-05-05 15:38:08.290 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[155/181] 已保存, ID=796, 标题=业务架构的原则包含哪些？
-2026-05-05 15:38:08.457 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[156/181] 已保存, ID=797, 标题=信息架构的原则包含哪些？
-2026-05-05 15:38:08.553 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[157/181] 已保存, ID=798, 标题=应用架构的原则包含哪些？
-2026-05-05 15:38:08.648 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[158/181] 已保存, ID=799, 标题=技术架构的原则包含哪些？
-2026-05-05 15:38:08.732 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[159/181] 已保存, ID=800, 标题=应用架构的价值有哪些？
-2026-05-05 15:38:08.891 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[160/181] 已保存, ID=801, 标题=以下哪些属于应用架构设计方法-五步法？
-2026-05-05 15:38:09.006 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[161/181] 已保存, ID=802, 标题=关于应用域划分正确的描述是？
-2026-05-05 15:38:09.107 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[162/181] 已保存, ID=803, 标题=识别应用系统模块—设计原则有哪些？
-2026-05-05 15:38:09.260 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[163/181] 已保存, ID=804, 标题=识别应用系统模块—识别方法有哪些？
-2026-05-05 15:38:09.434 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[164/181] 已保存, ID=805, 标题=识别应用服务—关键设计要点有哪些？
-2026-05-05 15:38:09.556 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[165/181] 已保存, ID=806, 标题=质量知识锦囊中质量大师系列中介绍朱兰、戴明的是第几期？
-2026-05-05 15:38:09.653 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[166/181] 已保存, ID=807, 标题=质量知识锦囊中介绍质量工具系列的是哪些？
-2026-05-05 15:38:09.964 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[167/181] 已保存, ID=808, 标题=PDCA和5Why在第几期？
-2026-05-05 15:38:10.065 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[168/181] 已保存, ID=809, 标题=质量知识锦囊目前介绍了哪些内容？
-2026-05-05 15:38:10.257 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[169/181] 已保存, ID=810, 标题=属于MECE分析法分类方法有哪些？
-2026-05-05 15:38:10.367 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[170/181] 已保存, ID=811, 标题=属于MECE分析法的原则有哪些？
-2026-05-05 15:38:10.469 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[171/181] 已保存, ID=812, 标题=质量回溯的法宝包含哪些？
-2026-05-05 15:38:10.616 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[172/181] 已保存, ID=813, 标题=根因分析可以用到的质量工具有哪些？
-2026-05-05 15:38:10.816 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[173/181] 已保存, ID=814, 标题=质量回溯的核心环节是什么？
-2026-05-05 15:38:10.952 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[174/181] 已保存, ID=815, 标题=质量改进是运用（    、   、   、    ），识别共性问题，优化质量要求，提升组织能力，实现更好的达成质量要求。
-2026-05-05 15:38:11.060 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[175/181] 已保存, ID=816, 标题=质量回溯知识锦囊中，对哪三个概念进行了澄清？
-2026-05-05 15:38:11.185 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[176/181] 已保存, ID=817, 标题=知识锦囊时间管理秘籍说法正确的有哪些？
-2026-05-05 15:38:11.294 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[177/181] 已保存, ID=818, 标题=属于时间管理秘籍工作紧急的是？
-2026-05-05 15:38:11.406 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[178/181] 已保存, ID=819, 标题=质量知识锦囊13、14、15期包含的内容涉及哪些方面？
-2026-05-05 15:38:11.521 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[179/181] 已保存, ID=820, 标题=属于质量回溯经典案例的是？最终的解决方案是什么？
-2026-05-05 15:38:11.639 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[180/181] 已保存, ID=821, 标题=属于“用户思维”的方法有哪些？
-2026-05-05 15:38:11.802 [http-nio-8080-exec-1] DEBUG c.faqrobot.service.IngestionService -   子分片[181/181] 已保存, ID=822, 标题=经典案例系列推送的第一个案例属于
-2026-05-05 15:38:11.802 [http-nio-8080-exec-1] INFO  c.faqrobot.service.IngestionService - ========== 导入完成: 质量答题2.txt → 181 个分片, 耗时 24069ms ==========
-2026-05-05 15:38:11.806 [http-nio-8080-exec-1] INFO  c.f.controller.KnowledgeController - 文件导入成功: 质量答题2.txt, 分片数: 181
-2026-05-05 15:38:11.815 [http-nio-8080-exec-1] WARN  o.s.w.m.s.StandardServletMultipartResolver - Failed to perform cleanup of multipart items
-java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.5318035943078787426\work\Tomcat\localhost\ROOT\upload_33acbc40_da24_4005_b71f_9c29890829cb_00000000.tmp
-	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
-	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
-	at org.springframework.web.multipart.support.StandardServletMultipartResolver.cleanupMultipart(StandardServletMultipartResolver.java:134)
-	at org.springframework.web.servlet.DispatcherServlet.cleanupMultipart(DispatcherServlet.java:1251)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1108)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.5318035943078787426\work\Tomcat\localhost\ROOT\upload_33acbc40_da24_4005_b71f_9c29890829cb_00000000.tmp
-	... 44 common frames omitted
-2026-05-05 15:38:11.816 [http-nio-8080-exec-1] WARN  o.apache.catalina.connector.Request - Failed to deleted temporary file used for part [file]
-java.io.UncheckedIOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.5318035943078787426\work\Tomcat\localhost\ROOT\upload_33acbc40_da24_4005_b71f_9c29890829cb_00000000.tmp
-	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:428)
-	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53)
-	at org.apache.catalina.connector.Request.recycle(Request.java:475)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:420)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: java.io.IOException: Cannot delete C:\Users\124055983\AppData\Local\Temp\tomcat.8080.5318035943078787426\work\Tomcat\localhost\ROOT\upload_33acbc40_da24_4005_b71f_9c29890829cb_00000000.tmp
-	... 13 common frames omitted
-2026-05-05 15:45:55.764 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 4720 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
-2026-05-05 15:45:55.765 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-05-05 15:45:55.766 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
-2026-05-05 15:45:56.159 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-05-05 15:45:56.189 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 25 ms. Found 1 JPA repository interfaces.
-2026-05-05 15:45:56.593 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-05-05 15:45:56.598 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-05-05 15:45:56.600 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-05-05 15:45:56.600 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-05-05 15:45:56.722 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-05-05 15:45:56.722 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 929 ms
-2026-05-05 15:45:56.742 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-05-05 15:45:56.816 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-05-05 15:45:56.823 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
-2026-05-05 15:45:56.904 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-05-05 15:45:56.931 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
-2026-05-05 15:45:57.050 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2026-05-05 15:45:57.108 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2026-05-05 15:45:57.455 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2026-05-05 15:45:57.462 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-05-05 15:45:57.711 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'knowledgeController' defined in file [F:\IdeaProjects\faq-robot\target\classes\com\faqrobot\controller\KnowledgeController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'ingestionService' defined in file [F:\IdeaProjects\faq-robot\target\classes\com\faqrobot\service\IngestionService.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'luceneIndexManager': Invocation of init method failed; nested exception is java.lang.RuntimeException: Lucene init failed
-2026-05-05 15:45:57.712 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-05-05 15:45:57.714 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-05-05 15:45:57.726 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-05-05 15:45:57.727 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
-2026-05-05 15:45:57.734 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2026-05-05 15:45:57.749 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'knowledgeController' defined in file [F:\IdeaProjects\faq-robot\target\classes\com\faqrobot\controller\KnowledgeController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'ingestionService' defined in file [F:\IdeaProjects\faq-robot\target\classes\com\faqrobot\service\IngestionService.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'luceneIndexManager': Invocation of init method failed; nested exception is java.lang.RuntimeException: Lucene init failed
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:224)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:929)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:591)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:409)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
-	at com.faqrobot.FaqRobotApplication.main(FaqRobotApplication.java:10)
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'ingestionService' defined in file [F:\IdeaProjects\faq-robot\target\classes\com\faqrobot\service\IngestionService.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'luceneIndexManager': Invocation of init method failed; nested exception is java.lang.RuntimeException: Lucene init failed
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:224)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
-	... 19 common frames omitted
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'luceneIndexManager': Invocation of init method failed; nested exception is java.lang.RuntimeException: Lucene init failed
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:160)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:440)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1796)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
-	... 33 common frames omitted
-Caused by: java.lang.RuntimeException: Lucene init failed
-	at com.faqrobot.repository.LuceneIndexManager.init(LuceneIndexManager.java:66)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:389)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:333)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:157)
-	... 46 common frames omitted
-Caused by: org.apache.lucene.store.LockObtainFailedException: Lock held by another program: F:\IdeaProjects\faq-robot\data\lucene-index\write.lock
-	at org.apache.lucene.store.NativeFSLockFactory.obtainFSLock(NativeFSLockFactory.java:130)
-	at org.apache.lucene.store.FSLockFactory.obtainLock(FSLockFactory.java:41)
-	at org.apache.lucene.store.BaseDirectory.obtainLock(BaseDirectory.java:45)
-	at org.apache.lucene.index.IndexWriter.<init>(IndexWriter.java:923)
-	at com.faqrobot.repository.LuceneIndexManager.init(LuceneIndexManager.java:52)
-	... 53 common frames omitted
+2026-05-06 09:01:58.035 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 3728 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
+2026-05-06 09:01:58.049 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-05-06 09:01:58.049 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-06 09:01:58.526 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-06 09:01:58.568 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 1 JPA repository interfaces.
+2026-05-06 09:01:58.937 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-05-06 09:01:58.943 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-05-06 09:01:58.944 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-06 09:01:58.945 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-05-06 09:01:59.128 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-05-06 09:01:59.128 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1048 ms
+2026-05-06 09:01:59.149 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-05-06 09:02:03.386 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-05-06 09:02:03.394 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
+2026-05-06 09:02:03.492 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-06 09:02:03.520 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-05-06 09:02:03.609 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-05-06 09:02:03.675 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2026-05-06 09:02:04.166 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-05-06 09:02:04.174 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-06 09:02:04.515 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 188 docs
+2026-05-06 09:02:04.570 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-06 09:02:04.666 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2026-05-06 09:02:04.969 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-05-06 09:02:05.008 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-05-06 09:02:05.016 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 7.333 seconds (JVM running for 8.077)
+2026-05-06 09:02:09.528 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-06 09:02:09.529 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-05-06 09:02:09.530 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-05-06 09:03:55.098 [http-nio-8080-exec-8] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=1186 | key_prefix=3263952d...
+2026-05-06 09:03:55.561 [http-nio-8080-exec-8] ERROR com.faqrobot.service.LLMService - LLM call failed: url=https://open.bigmodel.cn/api/paas/v4/chat/completions, error=429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-06 09:03:55.561 [http-nio-8080-exec-8] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: LLM 调用异常: 429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-06 09:05:53.672 [http-nio-8080-exec-6] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=914 | key_prefix=3263952d...
+2026-05-06 09:06:07.745 [http-nio-8080-exec-6] INFO  com.faqrobot.service.LLMService - LLM answered: 259 chars, model: glm-4.7-flash
+2026-05-06 09:34:15.186 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m41s425ms331µs201ns).
+2026-05-06 09:39:00.796 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 20704 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
+2026-05-06 09:39:00.796 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-05-06 09:39:00.796 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-06 09:39:01.293 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-06 09:39:01.337 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interfaces.
+2026-05-06 09:39:01.701 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-05-06 09:39:01.703 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-05-06 09:39:01.703 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-06 09:39:01.703 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-05-06 09:39:01.855 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-05-06 09:39:01.855 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1008 ms
+2026-05-06 09:39:01.876 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-05-06 09:39:06.114 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-05-06 09:39:06.128 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
+2026-05-06 09:39:06.225 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-06 09:39:06.255 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-05-06 09:39:06.336 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-05-06 09:39:06.406 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2026-05-06 09:39:06.797 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-05-06 09:39:06.799 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-06 09:39:07.113 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 188 docs
+2026-05-06 09:39:07.162 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-06 09:39:07.253 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2026-05-06 09:39:07.516 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-05-06 09:39:07.559 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-05-06 09:39:07.566 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 7.135 seconds (JVM running for 7.833)
+2026-05-06 11:00:00.705 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-06 11:00:00.707 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-05-06 11:00:00.727 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 19 ms
+2026-05-06 11:04:47.640 [main] INFO  com.faqrobot.FaqRobotApplication - Starting FaqRobotApplication using Java 1.8.0_411 on Ms10101438610 with PID 24456 (F:\IdeaProjects\faq-robot\target\classes started by 124055983 in F:\IdeaProjects\faq-robot)
+2026-05-06 11:04:47.640 [main] DEBUG com.faqrobot.FaqRobotApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-05-06 11:04:47.640 [main] INFO  com.faqrobot.FaqRobotApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-06 11:04:48.091 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-06 11:04:48.132 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 1 JPA repository interfaces.
+2026-05-06 11:04:48.505 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-05-06 11:04:48.515 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-05-06 11:04:48.515 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-06 11:04:48.515 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-05-06 11:04:48.677 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-05-06 11:04:48.677 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 998 ms
+2026-05-06 11:04:48.699 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-05-06 11:04:52.942 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-05-06 11:04:52.950 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/faqrobot'
+2026-05-06 11:04:53.050 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-06 11:04:53.080 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-05-06 11:04:53.173 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-05-06 11:04:53.239 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2026-05-06 11:04:53.631 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-05-06 11:04:53.638 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-06 11:04:53.951 [main] INFO  c.f.repository.LuceneIndexManager - existing lucene index loaded: 188 docs
+2026-05-06 11:04:54.002 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-06 11:04:54.093 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2026-05-06 11:04:54.383 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-05-06 11:04:54.424 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-05-06 11:04:54.432 [main] INFO  com.faqrobot.FaqRobotApplication - Started FaqRobotApplication in 7.131 seconds (JVM running for 7.842)
+2026-05-06 11:05:33.784 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-06 11:05:33.784 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-05-06 11:05:33.785 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-05-06 11:17:01.371 [http-nio-8080-exec-5] INFO  com.faqrobot.service.LLMService - LLM request -> https://open.bigmodel.cn/api/paas/v4/chat/completions | model=glm-4.7-flash | context_chars=975 | key_prefix=3263952d...
+2026-05-06 11:17:01.814 [http-nio-8080-exec-5] ERROR com.faqrobot.service.LLMService - LLM call failed: url=https://open.bigmodel.cn/api/paas/v4/chat/completions, error=429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
+2026-05-06 11:17:01.815 [http-nio-8080-exec-5] INFO  com.faqrobot.service.QAService - LLM unavailable, fallback to keyword matching, error: LLM 调用异常: 429 Too Many Requests: "{"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"}}"
